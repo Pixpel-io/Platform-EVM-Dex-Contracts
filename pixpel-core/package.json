@@ -1,0 +1,57 @@
+{
+  "name": "pixpelswap-core",
+  "description": "Core contracts for the PixpelSwap protocol",
+  "version": "1.0.1",
+  "homepage": "https://dex.pixpel.io/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pixpel-io/Platform-EVM-Dex-Contracts"
+  },
+  "keywords": [
+    "pixpel",
+    "ethereum",
+    "polygon",
+    "core",
+    "uniswap-v2"
+  ],
+  "files": [
+    "contracts",
+    "build"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.6",
+    "@types/mocha": "^5.2.7",
+    "chai": "^4.2.0",
+    "dotenv": "^16.4.7",
+    "ethereum-waffle": "^2.4.1",
+    "ethereumjs-util": "^6.2.0",
+    "mocha": "^6.2.2",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.0",
+    "solc": "^0.5.0",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.3"
+  },
+  "scripts": {
+    "lint": "yarn prettier ./test/*.ts --check",
+    "lint:fix": "yarn prettier ./test/*.ts --write",
+    "clean": "rimraf ./build/",
+    "precompile": "yarn clean",
+    "compile": "waffle .waffle.json",
+    "deploy:pair": "node deploy/pair.js",
+    "deploy:weth9": "node deploy/factory.js",
+    "pretest": "yarn compile",
+    "test": "mocha",
+    "prepublishOnly": "yarn test"
+  },
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "@nomicfoundation/hardhat-verify": "^2.0.12",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@uniswap/v2-core": "^1.0.1",
+    "hardhat": "^2.22.17"
+  }
+}
