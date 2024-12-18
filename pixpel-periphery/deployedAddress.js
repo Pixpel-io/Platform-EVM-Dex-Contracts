@@ -1,0 +1,5 @@
+const Weth = '0x95ac999302Ff402b39A8B952a662863338585d3c'
+const Router2 = '0x385953E060eDb5483D99b6733A2ccfbc1451C9f4'
+const Factory = '0x38d8959342B1c372cf45a7C529B8a2c370648e04'
+const Token = '0x6c17f69ee9a08050b9C37a7D3331723995136C19'
+export { Weth, Router2, Factory, Token }
