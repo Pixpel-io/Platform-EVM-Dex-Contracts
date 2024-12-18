@@ -9,6 +9,8 @@ This repository contains two main components: **Core Contracts** and **Periphery
 ### Core Contracts
 
 The `Core Contracts` folder has the following architecture:
+
+```
 Core Contracts/
 │
 ├── build/ # Build directory for compiled contracts
@@ -34,11 +36,13 @@ Core Contracts/
 ├── README.md # This README file
 ├── tsconfig.json # TypeScript configuration
 └── yarn.lock # Yarn lock file
+```
 
 ### V2-Periphery
 
 The `V2-Periphery` folder shares the same architecture:
 
+```
 V2-Periphery/
 │
 ├── build/ # Build directory for compiled contracts
@@ -62,6 +66,7 @@ V2-Periphery/
 ├── LICENSE # License file
 ├── package.json # Node.js package configuration
 ├── tsconfig.json # TypeScript configuration
+```
 
 ## Getting Started
 
