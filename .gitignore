@@ -1,0 +1,22 @@
+# Environment files
+.env
+pixpel-core/.env
+pixpel-periphery/.env
+
+# Node.js files
+node_modules/
+pixpel-core/node_modules/
+pixpel-periphery/node_modules/
+
+# Build files
+dist/
+build/
+pixpel-core/dist/
+pixpel-core/build/
+pixpel-periphery/dist/
+pixpel-periphery/build/
+
+# OS/System files
+.DS_Store
+.idea/
+.vscode/
