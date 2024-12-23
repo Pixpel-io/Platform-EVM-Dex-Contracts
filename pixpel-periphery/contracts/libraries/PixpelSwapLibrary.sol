@@ -22,7 +22,7 @@ library PixpelSwapLibrary {
                 hex'ff',
                 factory,
                 keccak256(abi.encodePacked(token0, token1)),
-                hex'96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f' // init code hash
+                hex'99aeb9b8f1d0776c00d2a7da1e1054cecbb1b42fb3d534a09ba293d2dbb90682' // init code hash
             ))));
     }
 

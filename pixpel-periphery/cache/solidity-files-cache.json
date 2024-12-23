@@ -122,10 +122,10 @@
         "IPixpelSwapV1Factory"
       ]
     },
-    "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-periphery/contracts/interfaces/IERC20.sol": {
-      "lastModificationDate": 1734342880007,
-      "contentHash": "108b56c8f45cfaf2b1aacc2a3a5f28d7",
-      "sourceName": "contracts/interfaces/IERC20.sol",
+    "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-periphery/contracts/interfaces/V1/IPixpelSwapExchange.sol": {
+      "lastModificationDate": 1734342892634,
+      "contentHash": "494d782291a7b38392052a4d1ab20f48",
+      "sourceName": "contracts/interfaces/V1/IPixpelSwapExchange.sol",
       "solcConfig": {
         "version": "0.6.12",
         "settings": {
@@ -157,7 +157,7 @@
         ">=0.5.0"
       ],
       "artifacts": [
-        "IERC20"
+        "IPixpelSwapExchange"
       ]
     },
     "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-periphery/contracts/interfaces/IPixpelSwapRouter01.sol": {
@@ -198,10 +198,10 @@
         "IPixpelSwapRouter01"
       ]
     },
-    "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-periphery/contracts/interfaces/V1/IPixpelSwapExchange.sol": {
-      "lastModificationDate": 1734342892634,
-      "contentHash": "494d782291a7b38392052a4d1ab20f48",
-      "sourceName": "contracts/interfaces/V1/IPixpelSwapExchange.sol",
+    "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-periphery/contracts/interfaces/IERC20.sol": {
+      "lastModificationDate": 1734342880007,
+      "contentHash": "108b56c8f45cfaf2b1aacc2a3a5f28d7",
+      "sourceName": "contracts/interfaces/IERC20.sol",
       "solcConfig": {
         "version": "0.6.12",
         "settings": {
@@ -233,7 +233,7 @@
         ">=0.5.0"
       ],
       "artifacts": [
-        "IPixpelSwapExchange"
+        "IERC20"
       ]
     },
     "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-periphery/node_modules/@uniswap/lib/contracts/libraries/TransferHelper.sol": {
@@ -404,8 +404,8 @@
       ]
     },
     "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-periphery/contracts/libraries/PixpelSwapLibrary.sol": {
-      "lastModificationDate": 1734519609863,
-      "contentHash": "cd482430c29f2ffd8e22cdf37890b9d3",
+      "lastModificationDate": 1734935951341,
+      "contentHash": "d76f569c37a117887203d012023c6d87",
       "sourceName": "contracts/libraries/PixpelSwapLibrary.sol",
       "solcConfig": {
         "version": "0.6.12",
