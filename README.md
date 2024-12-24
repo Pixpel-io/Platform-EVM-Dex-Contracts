@@ -1,151 +1,138 @@
-# Platform-EVM-Dex-Contracts
+# 🚀 Platform-EVM-Dex-Contracts  
 
-## Overview
+## 🌟 Overview  
 
-This repository contains two main components: **Core Contracts** and **Periphery**. Both components share a similar folder structure, with the Core Contracts housing essential smart contracts and the Periphery containing additional functionalities and tools to interact with the Core.
+This repository is your one-stop destination for managing **Core Contracts** and **Periphery** components for an EVM-based DEX platform.  
 
-## Repository Folder Structure
+- **Core Contracts**: Essential smart contracts for core functionalities.  
+- **Periphery**: Supporting tools and utilities to interact with the Core.  
 
-### Core Contracts
+Both components share a consistent folder structure for easy navigation and organization.  
 
-The `Core Contracts` folder has the following architecture:
+---
 
-```
-Core Contracts/
-│
-├── build/ # Build directory for compiled contracts
-├── cache/ # Cache for build artifacts
-├── contracts/ # Smart contracts
-│
-├── deploy/ # Deployment scripts
-├── node_modules/ # Node.js packages
-├── test/ # Test files
-├── test/shared/ # deploymnet for test files
-│
-├── .env # Environment variables
-├── .gitattributes # Git attributes
-├── .gitignore # Files to ignore in Git
-├── .mocharc.json # Mocha configuration
-├── .prettierrc # Prettier configuration
-├── .waffle.json # Waffle configuration
-│
-├── deployedAddress.js # Deployed contract addresses
-├── hardhat.config.js # Hardhat configuration
-├── LICENSE # License file
-├── package.json # Node.js package configuration
-├── README.md # This README file
-├── tsconfig.json # TypeScript configuration
-└── yarn.lock # Yarn lock file
-```
+## 📂 Repository Folder Structure  
 
-### V2-Periphery
+### 📦 Core Contracts  
 
-The `V2-Periphery` folder shares the same architecture:
+The `Core Contracts` folder is structured as follows:  
 
-```
-V2-Periphery/
-│
-├── build/ # Build directory for compiled contracts
-├── cache/ # Cache for build artifacts
-├── contracts/ # Smart contracts
-│
-├── deploy/ # Deployment scripts
-├── node_modules/ # Node.js packages
-├── test/ # Test files
-├──test/shared/ # deployment for test files
-│
-├── .env # Environment variables
-├── .gitattributes # Git attributes
-├── .gitignore # Files to ignore in Git
-├── .mocharc.json # Mocha configuration
-├── .prettierrc # Prettier configuration
-├── .waffle.json # Waffle configuration
-│
-├── deployedAddress.js # Deployed contract addresses
-├── hardhat.config.js # Hardhat configuration
-├── LICENSE # License file
-├── package.json # Node.js package configuration
-├── tsconfig.json # TypeScript configuration
-```
+```plaintext  
+Core Contracts/  
+├── build/              # Compiled contracts  
+├── cache/              # Build artifacts cache  
+├── contracts/          # Smart contract files  
+├── deploy/             # Deployment scripts  
+├── node_modules/       # Node.js dependencies  
+├── test/               # Test cases  
+│   ├── shared/         # Shared deployment for tests  
+├── .env                # Environment variables  
+├── .gitattributes      # Git attributes  
+├── .gitignore          # Files to ignore in Git  
+├── .mocharc.json       # Mocha configuration  
+├── .prettierrc         # Prettier configuration  
+├── .waffle.json        # Waffle configuration  
+├── deployedAddress.js  # Deployed contract addresses  
+├── hardhat.config.js   # Hardhat configuration  
+├── LICENSE             # License file  
+├── package.json        # Node.js package configuration  
+├── README.md           # This README file  
+├── tsconfig.json       # TypeScript configuration  
+└── yarn.lock           # Yarn lock file  
+```  
 
-## Getting Started
+### 📦 V2-Periphery  
 
-### Prerequisites
+The `V2-Periphery` folder mirrors the structure of Core Contracts for uniformity:  
 
-- Node.js
-- Yarn
-- Hardhat
+```plaintext  
+V2-Periphery/  
+├── build/              # Compiled contracts  
+├── cache/              # Build artifacts cache  
+├── contracts/          # Smart contract files  
+├── deploy/             # Deployment scripts  
+├── node_modules/       # Node.js dependencies  
+├── test/               # Test cases  
+│   ├── shared/         # Shared deployment for tests  
+├── .env                # Environment variables  
+├── .gitattributes      # Git attributes  
+├── .gitignore          # Files to ignore in Git  
+├── .mocharc.json       # Mocha configuration  
+├── .prettierrc         # Prettier configuration  
+├── .waffle.json        # Waffle configuration  
+├── deployedAddress.js  # Deployed contract addresses  
+├── hardhat.config.js   # Hardhat configuration  
+├── LICENSE             # License file  
+├── package.json        # Node.js package configuration  
+├── tsconfig.json       # TypeScript configuration  
+```  
 
-### Installation
+---
 
-1. Clone the repository:
+## 🚀 Getting Started  
 
-   git clone https://github.com/Pixpel-io/Platform-EVM-Dex-Contracts
+### ✅ Prerequisites  
 
-```
+Ensure you have the following installed:  
+- [Node.js](https://nodejs.org/)  
+- [Yarn](https://yarnpkg.com/)  
+- [Hardhat](https://hardhat.org/)  
 
-switch folder
-cd pixpel-core and cd pixpel-periphery
+### 📥 Installation  
 
-```
+1. Clone the repository:  
 
-2. Install dependencies:
+   ```bash  
+   git clone https://github.com/Pixpel-io/Platform-EVM-Dex-Contracts  
+   ```  
 
-```
+   Navigate to the respective folder:  
+   ```bash  
+   cd pixpel-core  
+   cd pixpel-periphery  
+   ```  
 
-yarn install
+2. Install dependencies:  
 
-```
+   ```bash  
+   yarn install  
+   ```  
 
-3. Set up environment varaibles:
+3. Configure environment variables:  
 
-```
+   Create a `.env` file based on the provided template and fill in the necessary values.  
 
-Create a .env file based on the provided template and fill in the necessary values.
+---
 
-```
+## 🛠️ Usage  
 
-# Usage
+### Core Contracts and Periphery  
 
-For both Core Contracts and Periphery:
+#### 📌 Compile Contracts:  
+```bash  
+yarn compile  
+```  
 
-COMPILE CONTRACTS:
+#### 📌 Run Tests:  
+```bash  
+yarn test  
+```  
 
-```
+#### 📌 Deploy Contracts:  
+```bash  
+yarn deploy:<file-name>  
+# Example: yarn deploy:factory  
+```  
 
-yarn compile
+#### 📌 Verify Contracts:  
+```bash  
+yarn hardhat run verify/verify.js --network <network-name>  
+```  
 
-```
+---
 
-RUN TEST:
+## 🌐 More Information  
 
-```
+Visit our official platform: [dex.pixpel.io](https://dex.pixpel.io/)  
 
-yarn test
-
-```
-
-DEPLOY CONTRACTS:
-
-```
-
-yarn deploy:file name
-i-e yarn deploy:factroy
-
-```
-
-VERIFY CONTRACTS:
-
-```
-
-yarn hardhat run verify/verify.js --network <network-name>
-
-```
-
-## More Information
-
-https://dex.pixpel.io/
-
-```
-
-```
+---  
