@@ -6,8 +6,8 @@ import '../libraries/SafeMath.sol';
 contract ERC20 {
     using SafeMath for uint;
 
-    string public constant name = 'USP Token';
-    string public constant symbol = 'USP';
+    string public constant name = 'Husky Token';
+    string public constant symbol = 'HTK';
     uint8 public constant decimals = 18;
     uint  public totalSupply;
     mapping(address => uint) public balanceOf;

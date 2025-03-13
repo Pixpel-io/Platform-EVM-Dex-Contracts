@@ -42,7 +42,7 @@
     "precompile": "yarn clean",
     "compile": "waffle .waffle.json",
     "deploy:pair": "node deploy/pair.js",
-    "deploy:weth9": "node deploy/factory.js",
+    "deploy:factory": "node deploy/factory.js",
     "pretest": "yarn compile",
     "test": "mocha",
     "prepublishOnly": "yarn test"
