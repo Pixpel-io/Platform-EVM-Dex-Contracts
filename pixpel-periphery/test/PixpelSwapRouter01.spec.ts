@@ -1,3 +1,6 @@
+//Note:to successfully run this file test uncomment the lines in PixpelSwapRouter02 contract
+//commented with "only for test"
+
 import chai, { expect } from 'chai'
 import { Contract } from 'ethers'
 import { AddressZero, Zero, MaxUint256 } from 'ethers/constants'
@@ -728,6 +731,158 @@ describe('PixpelSwapRouter{01,02}', () => {
             .to.emit(routerEventEmitter, 'Amounts')
             .withArgs([expectedSwapAmount, outputAmount])
         })
+      })
+    })
+
+    it('reverts on addLiquidityETH on SKALE', async () => {
+      if (routerVersion === RouterVersion.PixpelSwapRouter02) {
+        const WETHPartnerAmount = expandTo18Decimals(1)
+        const ETHAmount = expandTo18Decimals(4)
+
+        const expectedLiquidity = expandTo18Decimals(2)
+        const WETHPairToken0 = await WETHPair.token0()
+        await WETHPartner.approve(router.address, MaxUint256)
+        await router.setChainIdOverride(37084624)
+
+        await expect(
+          router.addLiquidityETH(
+            WETHPartner.address,
+            WETHPartnerAmount,
+            WETHPartnerAmount,
+            ETHAmount,
+            wallet.address,
+            MaxUint256,
+            { ...overrides, value: ETHAmount }
+          )
+        ).to.be.revertedWith('PixpelSwapRouter: SKALE network not supported')
+      }
+    })
+    it('reverts on removeLiquidityETH on SKALE', async () => {
+      if (routerVersion === RouterVersion.PixpelSwapRouter02) {
+        const WETHPartnerAmount = expandTo18Decimals(1)
+        const ETHAmount = expandTo18Decimals(4)
+        await WETHPartner.transfer(WETHPair.address, WETHPartnerAmount)
+        await WETH.deposit({ value: ETHAmount })
+        await WETH.transfer(WETHPair.address, ETHAmount)
+        await WETHPair.mint(wallet.address, overrides)
+
+        const expectedLiquidity = expandTo18Decimals(2)
+        await WETHPair.approve(router.address, MaxUint256)
+
+        await router.setChainIdOverride(37084624)
+
+        await expect(
+          router.removeLiquidityETH(
+            WETHPartner.address,
+            expectedLiquidity.sub(MINIMUM_LIQUIDITY),
+            0,
+            0,
+            wallet.address,
+            MaxUint256,
+            overrides
+          )
+        ).to.be.revertedWith('PixpelSwapRouter: SKALE network not supported')
+      }
+    })
+    it('reverts on removeLiquidityETHWithPermit on SKALE', async () => {
+      if (routerVersion === RouterVersion.PixpelSwapRouter02) {
+        const WETHPartnerAmount = expandTo18Decimals(1)
+        const ETHAmount = expandTo18Decimals(4)
+        await WETHPartner.transfer(WETHPair.address, WETHPartnerAmount)
+        await WETH.deposit({ value: ETHAmount })
+        await WETH.transfer(WETHPair.address, ETHAmount)
+        await WETHPair.mint(wallet.address, overrides)
+
+        const expectedLiquidity = expandTo18Decimals(2)
+        await WETHPair.approve(router.address, MaxUint256)
+
+        const nonce = await WETHPair.nonces(wallet.address)
+        const digest = await getApprovalDigest(
+          WETHPair,
+          { owner: wallet.address, spender: router.address, value: expectedLiquidity.sub(MINIMUM_LIQUIDITY) },
+          nonce,
+          MaxUint256
+        )
+
+        const { v, r, s } = ecsign(Buffer.from(digest.slice(2), 'hex'), Buffer.from(wallet.privateKey.slice(2), 'hex'))
+
+        await router.setChainIdOverride(37084624)
+
+        await expect(
+          router.removeLiquidityETHWithPermit(
+            WETHPartner.address,
+            expectedLiquidity.sub(MINIMUM_LIQUIDITY),
+            0,
+            0,
+            wallet.address,
+            MaxUint256,
+            false,
+            v,
+            r,
+            s,
+            overrides
+          )
+        ).to.be.revertedWith('PixpelSwapRouter: SKALE network not supported')
+      }
+    })
+
+    describe('swapExactTokensForETH', () => {
+      const WETHPartnerAmount = expandTo18Decimals(10)
+      const ETHAmount = expandTo18Decimals(5)
+      const swapAmount = expandTo18Decimals(1)
+
+      beforeEach(async () => {
+        await WETHPartner.transfer(WETHPair.address, WETHPartnerAmount)
+        await WETH.deposit({ value: ETHAmount })
+        await WETH.transfer(WETHPair.address, ETHAmount)
+        await WETHPair.mint(wallet.address, overrides)
+
+        await token0.approve(router.address, MaxUint256)
+      })
+
+      it('should revert if on skale chain', async () => {
+        if (routerVersion === RouterVersion.PixpelSwapRouter02) {
+          await router.setChainIdOverride(37084624)
+          await expect(
+            router.swapExactETHForTokens(0, [WETH.address, WETHPartner.address], wallet.address, MaxUint256, {
+              ...overrides,
+              value: swapAmount
+            })
+          ).to.be.revertedWith('PixpelSwapRouter: SKALE network not supported')
+        }
+      })
+    })
+    describe('swapExactTokensForETH', () => {
+      const WETHPartnerAmount = expandTo18Decimals(5)
+      const ETHAmount = expandTo18Decimals(10)
+      const swapAmount = expandTo18Decimals(1)
+      const expectedOutputAmount = bigNumberify('1662497915624478906')
+
+      beforeEach(async () => {
+        await WETHPartner.transfer(WETHPair.address, WETHPartnerAmount)
+        await WETH.deposit({ value: ETHAmount })
+        await WETH.transfer(WETHPair.address, ETHAmount)
+        await WETHPair.mint(wallet.address, overrides)
+      })
+
+      it('should revert if on skale chain', async () => {
+        if (routerVersion === RouterVersion.PixpelSwapRouter02) {
+          await router.setChainIdOverride(37084624)
+          await WETHPartner.approve(router.address, MaxUint256)
+          const WETHPairToken0 = await WETHPair.token0()
+          await router.setChainIdOverride(37084624)
+
+          await expect(
+            router.swapExactTokensForETH(
+              swapAmount,
+              0,
+              [WETHPartner.address, WETH.address],
+              wallet.address,
+              MaxUint256,
+              overrides
+            )
+          ).to.be.revertedWith('PixpelSwapRouter: SKALE network not supported')
+        }
       })
     })
   }

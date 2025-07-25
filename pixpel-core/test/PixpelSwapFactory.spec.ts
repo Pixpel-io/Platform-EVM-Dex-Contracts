@@ -1,5 +1,6 @@
 import chai, { expect } from 'chai'
 import { Contract, ethers } from 'ethers'
+import { keccak256 } from 'ethers/utils'
 import { AddressZero } from 'ethers/constants'
 import { solidity, MockProvider, createFixtureLoader } from 'ethereum-waffle'
 import { bigNumberify } from 'ethers/utils'
@@ -41,6 +42,8 @@ describe('PixpelSwapFactory', () => {
     const [token0, token1] = tokens[0].toLowerCase() < tokens[1].toLowerCase() ? tokens : [tokens[1], tokens[0]]
     // const salt = keccak256(solidityPack(['address', 'address'], [token0, token1]))
     const bytecode = `0x${PixpelSwapPair.evm.bytecode.object}`
+    const initCodeHash = keccak256(bytecode)
+    console.log('INIT_CODE_PAIR_HASH:', initCodeHash)
     const create2Address = getCreate2Address(factory.address, [token0, token1], bytecode)
     await expect(factory.createPair(...tokens))
       .to.emit(factory, 'PairCreated')

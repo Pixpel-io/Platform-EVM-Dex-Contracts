@@ -35,7 +35,7 @@ module.exports = {
     apiKey: {
       'nebula-testnet': 'na',
       'nebula-mainnet': 'na',
-      amoy: process.env.POLYGONSCAN_API_KEY // Replace with your API key from PolygonScan
+      polygonAmoy: process.env.POLYGONSCAN_API_KEY // Replace with your API key from PolygonScan
     },
     customChains: [
       {

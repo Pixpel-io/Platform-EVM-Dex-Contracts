@@ -1,9 +1,20 @@
 const { run } = require('hardhat')
 const { ethers } = require('ethers')
-const { Factory, Router2, Weth, Token, Token1, SkaleRouter, SkaleToken4, skaleUSDC } = require('../deployedAddress')
+const {
+  Factory,
+  Router2,
+  amoyRouter,
+  AmoyFactory,
+  Weth,
+  Token,
+  Token1,
+  SkaleRouter,
+  SkaleToken4,
+  skaleUSDC
+} = require('../deployedAddress')
 async function verifyContract() {
-  const contractAddress = skaleUSDC // Replace with actual contract address
-  const constructorArguments = [ethers.utils.parseUnits('1000000', 18)]
+  const contractAddress = amoyRouter // Replace with actual contract address
+  const constructorArguments = [AmoyFactory, Weth]
 
   console.log('Verifying contract...')
   try {

@@ -161,9 +161,8 @@ describe('fee-on-transfer tokens', () => {
 
   it('removeLiquidityETHSupportingFeeOnTransferTokens', async () => {
     const DTTAmount = expandTo18Decimals(1)
-    await addLiquidity(DTTAmount, ETHAmount)
     const ETHAmount = expandTo18Decimals(4)
-
+    await addLiquidity(DTTAmount, ETHAmount)
     const DTTInPair = await DTT.balanceOf(pair.address)
     const WETHInPair = await WETH.balanceOf(pair.address)
     const liquidity = await pair.balanceOf(wallet.address)

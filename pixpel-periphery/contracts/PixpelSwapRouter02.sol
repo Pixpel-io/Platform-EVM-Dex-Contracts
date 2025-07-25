@@ -15,6 +15,12 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
 
     address public immutable override factory;
     address public immutable override WETH;
+    uint256 public SKALE_CHAIN_ID = 37084624;
+    address public owner;
+
+    //only for test
+    // uint256 public chainIdOverride;
+    event SkaleRouterConfigUpdated(uint256 newChainId);
 
     modifier ensure(uint deadline) {
         require(deadline >= block.timestamp, 'PixpelSwapRouter: EXPIRED');
@@ -24,11 +30,19 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
     constructor(address _factory, address _WETH) public {
         factory = _factory;
         WETH = _WETH;
+        owner = msg.sender;
     }
 
     receive() external payable {
-        assert(msg.sender == WETH); // only accept ETH via fallback from the WETH contract
+        if (msg.sender != WETH) {
+            revert('PixpelSwapRouter: Only WETH allowed');
+        }
     }
+
+    //only for test
+    // function setChainIdOverride(uint256 _id) external {
+    //     chainIdOverride = _id;
+    // }
 
     // **** ADD LIQUIDITY ****
     function _addLiquidity(
@@ -59,6 +73,7 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
             }
         }
     }
+
     function addLiquidity(
         address tokenA,
         address tokenB,
@@ -75,6 +90,7 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         TransferHelper.safeTransferFrom(tokenB, msg.sender, pair, amountB);
         liquidity = IPixpelSwapPair(pair).mint(to);
     }
+
     function addLiquidityETH(
         address token,
         uint amountTokenDesired,
@@ -82,7 +98,19 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         uint amountETHMin,
         address to,
         uint deadline
-    ) external virtual override payable ensure(deadline) returns (uint amountToken, uint amountETH, uint liquidity) {
+    ) external payable virtual override ensure(deadline) returns (uint amountToken, uint amountETH, uint liquidity) {
+        uint256 chainId;
+        assembly {
+            chainId := chainid()
+        }
+
+        //only for test
+        // if (chainIdOverride != 0) {
+        //     chainId = chainIdOverride;
+        // }
+
+        require(chainId != SKALE_CHAIN_ID, 'PixpelSwapRouter: SKALE network not supported');
+
         (amountToken, amountETH) = _addLiquidity(
             token,
             WETH,
@@ -113,11 +141,12 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         address pair = PixpelSwapLibrary.pairFor(factory, tokenA, tokenB);
         IPixpelSwapPair(pair).transferFrom(msg.sender, pair, liquidity); // send liquidity to pair
         (uint amount0, uint amount1) = IPixpelSwapPair(pair).burn(to);
-        (address token0,) = PixpelSwapLibrary.sortTokens(tokenA, tokenB);
+        (address token0, ) = PixpelSwapLibrary.sortTokens(tokenA, tokenB);
         (amountA, amountB) = tokenA == token0 ? (amount0, amount1) : (amount1, amount0);
         require(amountA >= amountAMin, 'PixpelSwapRouter: INSUFFICIENT_A_AMOUNT');
         require(amountB >= amountBMin, 'PixpelSwapRouter: INSUFFICIENT_B_AMOUNT');
     }
+
     function removeLiquidityETH(
         address token,
         uint liquidity,
@@ -126,6 +155,17 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         address to,
         uint deadline
     ) public virtual override ensure(deadline) returns (uint amountToken, uint amountETH) {
+        uint256 chainId;
+
+        assembly {
+            chainId := chainid()
+        }
+        //only for test
+        // if (chainIdOverride != 0) {
+        //     chainId = chainIdOverride;
+        // }
+        require(chainId != SKALE_CHAIN_ID, 'PixpelSwapRouter: SKALE network not supported');
+
         (amountToken, amountETH) = removeLiquidity(
             token,
             WETH,
@@ -139,6 +179,7 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         IWETH(WETH).withdraw(amountETH);
         TransferHelper.safeTransferETH(to, amountETH);
     }
+
     function removeLiquidityWithPermit(
         address tokenA,
         address tokenB,
@@ -147,13 +188,17 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         uint amountBMin,
         address to,
         uint deadline,
-        bool approveMax, uint8 v, bytes32 r, bytes32 s
+        bool approveMax,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
     ) external virtual override returns (uint amountA, uint amountB) {
         address pair = PixpelSwapLibrary.pairFor(factory, tokenA, tokenB);
         uint value = approveMax ? uint(-1) : liquidity;
         IPixpelSwapPair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
         (amountA, amountB) = removeLiquidity(tokenA, tokenB, liquidity, amountAMin, amountBMin, to, deadline);
     }
+
     function removeLiquidityETHWithPermit(
         address token,
         uint liquidity,
@@ -161,8 +206,22 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         uint amountETHMin,
         address to,
         uint deadline,
-        bool approveMax, uint8 v, bytes32 r, bytes32 s
+        bool approveMax,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
     ) external virtual override returns (uint amountToken, uint amountETH) {
+        uint256 chainId;
+
+        assembly {
+            chainId := chainid()
+        }
+        //only for test
+        // if (chainIdOverride != 0) {
+        //     chainId = chainIdOverride;
+        // }
+        require(chainId != SKALE_CHAIN_ID, 'PixpelSwapRouter: SKALE network not supported');
+
         address pair = PixpelSwapLibrary.pairFor(factory, token, WETH);
         uint value = approveMax ? uint(-1) : liquidity;
         IPixpelSwapPair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
@@ -178,19 +237,12 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         address to,
         uint deadline
     ) public virtual override ensure(deadline) returns (uint amountETH) {
-        (, amountETH) = removeLiquidity(
-            token,
-            WETH,
-            liquidity,
-            amountTokenMin,
-            amountETHMin,
-            address(this),
-            deadline
-        );
+        (, amountETH) = removeLiquidity(token, WETH, liquidity, amountTokenMin, amountETHMin, address(this), deadline);
         TransferHelper.safeTransfer(token, to, IERC20(token).balanceOf(address(this)));
         IWETH(WETH).withdraw(amountETH);
         TransferHelper.safeTransferETH(to, amountETH);
     }
+
     function removeLiquidityETHWithPermitSupportingFeeOnTransferTokens(
         address token,
         uint liquidity,
@@ -198,13 +250,32 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         uint amountETHMin,
         address to,
         uint deadline,
-        bool approveMax, uint8 v, bytes32 r, bytes32 s
+        bool approveMax,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
     ) external virtual override returns (uint amountETH) {
+        uint256 chainId;
+
+        assembly {
+            chainId := chainid()
+        }
+        //only for test
+        // if (chainIdOverride != 0) {
+        //     chainId = chainIdOverride;
+        // }
+        require(chainId != SKALE_CHAIN_ID, 'PixpelSwapRouter: SKALE network not supported');
+
         address pair = PixpelSwapLibrary.pairFor(factory, token, WETH);
         uint value = approveMax ? uint(-1) : liquidity;
         IPixpelSwapPair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
         amountETH = removeLiquidityETHSupportingFeeOnTransferTokens(
-            token, liquidity, amountTokenMin, amountETHMin, to, deadline
+            token,
+            liquidity,
+            amountTokenMin,
+            amountETHMin,
+            to,
+            deadline
         );
     }
 
@@ -213,15 +284,19 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
     function _swap(uint[] memory amounts, address[] memory path, address _to) internal virtual {
         for (uint i; i < path.length - 1; i++) {
             (address input, address output) = (path[i], path[i + 1]);
-            (address token0,) = PixpelSwapLibrary.sortTokens(input, output);
+            (address token0, ) = PixpelSwapLibrary.sortTokens(input, output);
             uint amountOut = amounts[i + 1];
             (uint amount0Out, uint amount1Out) = input == token0 ? (uint(0), amountOut) : (amountOut, uint(0));
             address to = i < path.length - 2 ? PixpelSwapLibrary.pairFor(factory, output, path[i + 2]) : _to;
             IPixpelSwapPair(PixpelSwapLibrary.pairFor(factory, input, output)).swap(
-                amount0Out, amount1Out, to, new bytes(0)
+                amount0Out,
+                amount1Out,
+                to,
+                new bytes(0)
             );
         }
     }
+
     function swapExactTokensForTokens(
         uint amountIn,
         uint amountOutMin,
@@ -232,10 +307,14 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         amounts = PixpelSwapLibrary.getAmountsOut(factory, amountIn, path);
         require(amounts[amounts.length - 1] >= amountOutMin, 'PixpelSwapRouter: INSUFFICIENT_OUTPUT_AMOUNT');
         TransferHelper.safeTransferFrom(
-            path[0], msg.sender, PixpelSwapLibrary.pairFor(factory, path[0], path[1]), amounts[0]
+            path[0],
+            msg.sender,
+            PixpelSwapLibrary.pairFor(factory, path[0], path[1]),
+            amounts[0]
         );
         _swap(amounts, path, to);
     }
+
     function swapTokensForExactTokens(
         uint amountOut,
         uint amountInMax,
@@ -246,18 +325,31 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         amounts = PixpelSwapLibrary.getAmountsIn(factory, amountOut, path);
         require(amounts[0] <= amountInMax, 'PixpelSwapRouter: EXCESSIVE_INPUT_AMOUNT');
         TransferHelper.safeTransferFrom(
-            path[0], msg.sender, PixpelSwapLibrary.pairFor(factory, path[0], path[1]), amounts[0]
+            path[0],
+            msg.sender,
+            PixpelSwapLibrary.pairFor(factory, path[0], path[1]),
+            amounts[0]
         );
         _swap(amounts, path, to);
     }
-    function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline)
-        external
-        virtual
-        override
-        payable
-        ensure(deadline)
-        returns (uint[] memory amounts)
-    {
+
+    function swapExactETHForTokens(
+        uint amountOutMin,
+        address[] calldata path,
+        address to,
+        uint deadline
+    ) external payable virtual override ensure(deadline) returns (uint[] memory amounts) {
+        uint256 chainId;
+
+        assembly {
+            chainId := chainid()
+        }
+        //only for test
+        // if (chainIdOverride != 0) {
+        //     chainId = chainIdOverride;
+        // }
+        require(chainId != SKALE_CHAIN_ID, 'PixpelSwapRouter: SKALE network not supported');
+
         require(path[0] == WETH, 'PixpelSwapRouter: INVALID_PATH');
         amounts = PixpelSwapLibrary.getAmountsOut(factory, msg.value, path);
         require(amounts[amounts.length - 1] >= amountOutMin, 'PixpelSwapRouter: INSUFFICIENT_OUTPUT_AMOUNT');
@@ -265,48 +357,67 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         assert(IWETH(WETH).transfer(PixpelSwapLibrary.pairFor(factory, path[0], path[1]), amounts[0]));
         _swap(amounts, path, to);
     }
-    function swapTokensForExactETH(uint amountOut, uint amountInMax, address[] calldata path, address to, uint deadline)
-        external
-        virtual
-        override
-        ensure(deadline)
-        returns (uint[] memory amounts)
-    {
+
+    function swapTokensForExactETH(
+        uint amountOut,
+        uint amountInMax,
+        address[] calldata path,
+        address to,
+        uint deadline
+    ) external virtual override ensure(deadline) returns (uint[] memory amounts) {
+        uint256 chainId;
+
         require(path[path.length - 1] == WETH, 'PixpelSwapRouter: INVALID_PATH');
         amounts = PixpelSwapLibrary.getAmountsIn(factory, amountOut, path);
         require(amounts[0] <= amountInMax, 'PixpelSwapRouter: EXCESSIVE_INPUT_AMOUNT');
         TransferHelper.safeTransferFrom(
-            path[0], msg.sender, PixpelSwapLibrary.pairFor(factory, path[0], path[1]), amounts[0]
+            path[0],
+            msg.sender,
+            PixpelSwapLibrary.pairFor(factory, path[0], path[1]),
+            amounts[0]
         );
         _swap(amounts, path, address(this));
         IWETH(WETH).withdraw(amounts[amounts.length - 1]);
         TransferHelper.safeTransferETH(to, amounts[amounts.length - 1]);
     }
-    function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
-        external
-        virtual
-        override
-        ensure(deadline)
-        returns (uint[] memory amounts)
-    {
+
+    function swapExactTokensForETH(
+        uint amountIn,
+        uint amountOutMin,
+        address[] calldata path,
+        address to,
+        uint deadline
+    ) external virtual override ensure(deadline) returns (uint[] memory amounts) {
+        uint256 chainId;
+        assembly {
+            chainId := chainid()
+        }
+        //only for test
+        // if (chainIdOverride != 0) {
+        //     chainId = chainIdOverride;
+        // }
+        require(chainId != SKALE_CHAIN_ID, 'PixpelSwapRouter: SKALE network not supported');
+
         require(path[path.length - 1] == WETH, 'PixpelSwapRouter: INVALID_PATH');
         amounts = PixpelSwapLibrary.getAmountsOut(factory, amountIn, path);
         require(amounts[amounts.length - 1] >= amountOutMin, 'PixpelSwapRouter: INSUFFICIENT_OUTPUT_AMOUNT');
         TransferHelper.safeTransferFrom(
-            path[0], msg.sender, PixpelSwapLibrary.pairFor(factory, path[0], path[1]), amounts[0]
+            path[0],
+            msg.sender,
+            PixpelSwapLibrary.pairFor(factory, path[0], path[1]),
+            amounts[0]
         );
         _swap(amounts, path, address(this));
         IWETH(WETH).withdraw(amounts[amounts.length - 1]);
         TransferHelper.safeTransferETH(to, amounts[amounts.length - 1]);
     }
-    function swapETHForExactTokens(uint amountOut, address[] calldata path, address to, uint deadline)
-        external
-        virtual
-        override
-        payable
-        ensure(deadline)
-        returns (uint[] memory amounts)
-    {
+
+    function swapETHForExactTokens(
+        uint amountOut,
+        address[] calldata path,
+        address to,
+        uint deadline
+    ) external payable virtual override ensure(deadline) returns (uint[] memory amounts) {
         require(path[0] == WETH, 'PixpelSwapRouter: INVALID_PATH');
         amounts = PixpelSwapLibrary.getAmountsIn(factory, amountOut, path);
         require(amounts[0] <= msg.value, 'PixpelSwapRouter: EXCESSIVE_INPUT_AMOUNT');
@@ -322,21 +433,23 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
     function _swapSupportingFeeOnTransferTokens(address[] memory path, address _to) internal virtual {
         for (uint i; i < path.length - 1; i++) {
             (address input, address output) = (path[i], path[i + 1]);
-            (address token0,) = PixpelSwapLibrary.sortTokens(input, output);
+            (address token0, ) = PixpelSwapLibrary.sortTokens(input, output);
             IPixpelSwapPair pair = IPixpelSwapPair(PixpelSwapLibrary.pairFor(factory, input, output));
             uint amountInput;
             uint amountOutput;
-            { // scope to avoid stack too deep errors
-            (uint reserve0, uint reserve1,) = pair.getReserves();
-            (uint reserveInput, uint reserveOutput) = input == token0 ? (reserve0, reserve1) : (reserve1, reserve0);
-            amountInput = IERC20(input).balanceOf(address(pair)).sub(reserveInput);
-            amountOutput = PixpelSwapLibrary.getAmountOut(amountInput, reserveInput, reserveOutput);
+            {
+                // scope to avoid stack too deep errors
+                (uint reserve0, uint reserve1, ) = pair.getReserves();
+                (uint reserveInput, uint reserveOutput) = input == token0 ? (reserve0, reserve1) : (reserve1, reserve0);
+                amountInput = IERC20(input).balanceOf(address(pair)).sub(reserveInput);
+                amountOutput = PixpelSwapLibrary.getAmountOut(amountInput, reserveInput, reserveOutput);
             }
             (uint amount0Out, uint amount1Out) = input == token0 ? (uint(0), amountOutput) : (amountOutput, uint(0));
             address to = i < path.length - 2 ? PixpelSwapLibrary.pairFor(factory, output, path[i + 2]) : _to;
             pair.swap(amount0Out, amount1Out, to, new bytes(0));
         }
     }
+
     function swapExactTokensForTokensSupportingFeeOnTransferTokens(
         uint amountIn,
         uint amountOutMin,
@@ -345,7 +458,10 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         uint deadline
     ) external virtual override ensure(deadline) {
         TransferHelper.safeTransferFrom(
-            path[0], msg.sender, PixpelSwapLibrary.pairFor(factory, path[0], path[1]), amountIn
+            path[0],
+            msg.sender,
+            PixpelSwapLibrary.pairFor(factory, path[0], path[1]),
+            amountIn
         );
         uint balanceBefore = IERC20(path[path.length - 1]).balanceOf(to);
         _swapSupportingFeeOnTransferTokens(path, to);
@@ -354,18 +470,13 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
             'PixpelSwapRouter: INSUFFICIENT_OUTPUT_AMOUNT'
         );
     }
+
     function swapExactETHForTokensSupportingFeeOnTransferTokens(
         uint amountOutMin,
         address[] calldata path,
         address to,
         uint deadline
-    )
-        external
-        virtual
-        override
-        payable
-        ensure(deadline)
-    {
+    ) external payable virtual override ensure(deadline) {
         require(path[0] == WETH, 'PixpelSwapRouter: INVALID_PATH');
         uint amountIn = msg.value;
         IWETH(WETH).deposit{value: amountIn}();
@@ -377,21 +488,20 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
             'PixpelSwapRouter: INSUFFICIENT_OUTPUT_AMOUNT'
         );
     }
+
     function swapExactTokensForETHSupportingFeeOnTransferTokens(
         uint amountIn,
         uint amountOutMin,
         address[] calldata path,
         address to,
         uint deadline
-    )
-        external
-        virtual
-        override
-        ensure(deadline)
-    {
+    ) external virtual override ensure(deadline) {
         require(path[path.length - 1] == WETH, 'PixpelSwapRouter: INVALID_PATH');
         TransferHelper.safeTransferFrom(
-            path[0], msg.sender, PixpelSwapLibrary.pairFor(factory, path[0], path[1]), amountIn
+            path[0],
+            msg.sender,
+            PixpelSwapLibrary.pairFor(factory, path[0], path[1]),
+            amountIn
         );
         _swapSupportingFeeOnTransferTokens(path, address(this));
         uint amountOut = IERC20(WETH).balanceOf(address(this));
@@ -405,43 +515,47 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         return PixpelSwapLibrary.quote(amountA, reserveA, reserveB);
     }
 
-    function getAmountOut(uint amountIn, uint reserveIn, uint reserveOut)
-        public
-        pure
-        virtual
-        override
-        returns (uint amountOut)
-    {
+    function getAmountOut(
+        uint amountIn,
+        uint reserveIn,
+        uint reserveOut
+    ) public pure virtual override returns (uint amountOut) {
         return PixpelSwapLibrary.getAmountOut(amountIn, reserveIn, reserveOut);
     }
 
-    function getAmountIn(uint amountOut, uint reserveIn, uint reserveOut)
-        public
-        pure
-        virtual
-        override
-        returns (uint amountIn)
-    {
+    function getAmountIn(
+        uint amountOut,
+        uint reserveIn,
+        uint reserveOut
+    ) public pure virtual override returns (uint amountIn) {
         return PixpelSwapLibrary.getAmountIn(amountOut, reserveIn, reserveOut);
     }
 
-    function getAmountsOut(uint amountIn, address[] memory path)
-        public
-        view
-        virtual
-        override
-        returns (uint[] memory amounts)
-    {
+    function getAmountsOut(
+        uint amountIn,
+        address[] memory path
+    ) public view virtual override returns (uint[] memory amounts) {
         return PixpelSwapLibrary.getAmountsOut(factory, amountIn, path);
     }
 
-    function getAmountsIn(uint amountOut, address[] memory path)
-        public
-        view
-        virtual
-        override
-        returns (uint[] memory amounts)
-    {
+    function getAmountsIn(
+        uint amountOut,
+        address[] memory path
+    ) public view virtual override returns (uint[] memory amounts) {
         return PixpelSwapLibrary.getAmountsIn(factory, amountOut, path);
+    }
+
+    function setOwner(address _owner) external {
+        require(msg.sender == owner, 'PixpelSwapRouter: FORBIDDEN');
+        require(_owner != address(0), 'PixpelSwapRouter: ZERO_ADDRESS');
+        owner = _owner;
+    }
+
+    function setSkaleRouterConfig(uint256 _chainId) external {
+        require(msg.sender == owner, 'PixpelSwapRouter: FORBIDDEN');
+
+        SKALE_CHAIN_ID = _chainId;
+
+        emit SkaleRouterConfigUpdated(_chainId);
     }
 }
