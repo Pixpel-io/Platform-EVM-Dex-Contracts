@@ -11,6 +11,10 @@ const SkaleToken3 = '0xe2e9D3010Ccd2C040b7F86a0128f78b97D73F8a3'
 const SkaleToken4 = '0x64C817c6025DBb203803910e01efAB78B463623c'
 const skaleUSDC = '0xB219CaDA40fEA0aAFeD7Bc96157d4db745DF658d'
 const amoyRouter = '0xE6f5809BDc3396f6A17C0578861DB3EE4Cdb9f98'
+const L1XFactory = '0x4CA4840441d0DED1CBC2cAAA3a1Eb7eDbe7AD2F9'
+const L1XWETH = '0x26291F4c2f6944C3849A65a11CA26f615fAeFdbD'
+const L1XRouter = '0x1dfAf7f98C0824EeE85D15c4E83A637B0Ee8060E'
+
 export {
   Weth,
   Router2,
@@ -23,5 +27,7 @@ export {
   SkaleToken1,
   SkaleToken2,
   SkaleToken4,
-  skaleUSDC
+  skaleUSDC,
+  L1XFactory,
+  L1XWETH
 }

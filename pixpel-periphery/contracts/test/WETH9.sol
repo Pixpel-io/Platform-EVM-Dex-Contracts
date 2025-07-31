@@ -16,8 +16,8 @@
 pragma solidity ^0.6.0;
 
 contract WETH9 {
-    string public name = 'Wrapped sFUEl';
-    string public symbol = 'WsFUEl';
+    string public name = 'Wrapped L1X';
+    string public symbol = 'WL1X';
     uint8 public decimals = 18;
 
     event Approval(address indexed src, address indexed guy, uint wad);
