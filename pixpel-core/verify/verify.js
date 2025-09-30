@@ -2,7 +2,7 @@ const { run } = require('hardhat')
 const { SkaleFactory, AmoyFactory } = require('../deployedAddress')
 async function verifyContract() {
   const contractAddress = AmoyFactory
-  const constructorArguments = ['0x609DE8dd52FA1Cf32Ff6C4eF7EF18c5d5a87aA62']
+  const constructorArguments = []
 
   console.log('Verifying contract...')
   try {

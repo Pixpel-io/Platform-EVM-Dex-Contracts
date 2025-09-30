@@ -125,7 +125,7 @@ yarn test
 #### 📌 Note:
 
 ```bash
-To recompile or deploy to new network need to change byte code hash for uniswap pair lib
+To recompile or deploy to new network need to change byte code hash for uniswap pair lib inside PixpelSwapLibrary.sol
 ```
 
 #### 📌 Deploy Contracts:

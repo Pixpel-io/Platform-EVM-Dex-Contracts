@@ -1,7 +1,7 @@
-require('@nomiclabs/hardhat-ethers');
-require('@nomicfoundation/hardhat-verify');
-require('dotenv').config();
-require('@nomicfoundation/hardhat-toolbox');
+require('@nomiclabs/hardhat-ethers')
+require('@nomicfoundation/hardhat-verify')
+require('dotenv').config()
+require('@nomicfoundation/hardhat-toolbox')
 
 module.exports = {
   solidity: {
@@ -41,10 +41,20 @@ module.exports = {
     apiKey: {
       'nebula-testnet': 'na',
       'nebula-mainnet': 'na',
-      polygonAmoy: process.env.POLYGONSCAN_API_KEY,
+      amoy: process.env.POLYGONSCAN_API_KEY,
+      apiKey: process.env.POLYGONSCAN_API_KEY,
       l1x: 'na' // If L1X explorer supports API key
     },
     customChains: [
+      {
+        network: 'amoy',
+        chainId: 80002,
+
+        urls: {
+          apiURL: 'https://api.etherscan.io/v2/api?chainid=80002',
+          browserURL: 'https://amoy.polygonscan.com'
+        }
+      },
       {
         network: 'nebula-testnet',
         chainId: 37084624,
@@ -71,4 +81,4 @@ module.exports = {
       }
     ]
   }
-};
+}

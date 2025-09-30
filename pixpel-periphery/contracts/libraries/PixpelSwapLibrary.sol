@@ -26,7 +26,7 @@ library PixpelSwapLibrary {
                         factory,
                         keccak256(abi.encodePacked(token0, token1)),
                         // hex'96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f' // for testing contracts
-                        hex'99aeb9b8f1d0776c00d2a7da1e1054cecbb1b42fb3d534a09ba293d2dbb90682' // init code hash
+                        hex'5ae1c9b1e59d4d80ce433d0fbd993aad4e368cfe93780933d5240a8ee91b3ef4' // init code hash
                     )
                 )
             )

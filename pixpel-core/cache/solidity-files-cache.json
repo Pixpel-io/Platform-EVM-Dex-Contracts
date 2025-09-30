@@ -1,10 +1,10 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-core/contracts/PixpelSwapERC20.sol": {
-      "lastModificationDate": 1734332262394,
-      "contentHash": "540eec7a475aa9d72d6eab7ad26153f2",
-      "sourceName": "contracts/PixpelSwapERC20.sol",
+    "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-core/contracts/PairHash.sol": {
+      "lastModificationDate": 1759211661551,
+      "contentHash": "f4b876d0bc58f275b7307bab6f23a188",
+      "sourceName": "contracts/PairHash.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
@@ -32,134 +32,17 @@
         }
       },
       "imports": [
-        "./interfaces/IPixpelSwapERC20.sol",
-        "./libraries/SafeMath.sol"
+        "./PixpelSwapPair.sol"
       ],
       "versionPragmas": [
         "^0.5.16"
       ],
       "artifacts": [
-        "PixpelSwapERC20"
+        "HashChecker"
       ]
     },
-    "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-core/contracts/interfaces/IPixpelSwapERC20.sol": {
-      "lastModificationDate": 1734070936520,
-      "contentHash": "bb718d768bb3f3b34b05ab56e1bcdcf0",
-      "sourceName": "contracts/interfaces/IPixpelSwapERC20.sol",
-      "solcConfig": {
-        "version": "0.5.17",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 999999
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "evmVersion": "istanbul"
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.5.16"
-      ],
-      "artifacts": [
-        "IPixpelSwapERC20"
-      ]
-    },
-    "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-core/contracts/libraries/SafeMath.sol": {
-      "lastModificationDate": 1734070909147,
-      "contentHash": "1ac91121cab49a84ce8e5ae199f5b6f6",
-      "sourceName": "contracts/libraries/SafeMath.sol",
-      "solcConfig": {
-        "version": "0.5.17",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 999999
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "evmVersion": "istanbul"
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.5.16"
-      ],
-      "artifacts": [
-        "SafeMath"
-      ]
-    },
-    "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-core/contracts/test/ERC20.sol": {
-      "lastModificationDate": 1734074077699,
-      "contentHash": "be7339d13bd2e809d869f8e86a6c2fef",
-      "sourceName": "contracts/test/ERC20.sol",
-      "solcConfig": {
-        "version": "0.5.17",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 999999
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "evmVersion": "istanbul"
-        }
-      },
-      "imports": [
-        "../PixpelSwapERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.5.16"
-      ],
-      "artifacts": [
-        "ERC20"
-      ]
-    },
-    "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-core/contracts/PixpelSwapPair.sol": {
-      "lastModificationDate": 1734209213995,
+    "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-core/contracts/PixpelSwapPair.sol": {
+      "lastModificationDate": 1758821011177,
       "contentHash": "da13ee1254971d87cf2902e39b2c57a6",
       "sourceName": "contracts/PixpelSwapPair.sol",
       "solcConfig": {
@@ -204,8 +87,8 @@
         "PixpelSwapPair"
       ]
     },
-    "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-core/contracts/interfaces/IPixpelSwapPair.sol": {
-      "lastModificationDate": 1734430997663,
+    "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-core/contracts/interfaces/IPixpelSwapPair.sol": {
+      "lastModificationDate": 1758821011178,
       "contentHash": "aa9bd5e71963ff1f5c09c3949099f574",
       "sourceName": "contracts/interfaces/IPixpelSwapPair.sol",
       "solcConfig": {
@@ -242,10 +125,10 @@
         "IPixpelSwapPair"
       ]
     },
-    "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-core/contracts/libraries/Math.sol": {
-      "lastModificationDate": 1734070916014,
-      "contentHash": "8bd0f252761397f299bdbe47e67ce8ab",
-      "sourceName": "contracts/libraries/Math.sol",
+    "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-core/contracts/PixpelSwapERC20.sol": {
+      "lastModificationDate": 1758821011176,
+      "contentHash": "540eec7a475aa9d72d6eab7ad26153f2",
+      "sourceName": "contracts/PixpelSwapERC20.sol",
       "solcConfig": {
         "version": "0.5.17",
         "settings": {
@@ -272,16 +155,19 @@
           "evmVersion": "istanbul"
         }
       },
-      "imports": [],
+      "imports": [
+        "./interfaces/IPixpelSwapERC20.sol",
+        "./libraries/SafeMath.sol"
+      ],
       "versionPragmas": [
         "^0.5.16"
       ],
       "artifacts": [
-        "Math"
+        "PixpelSwapERC20"
       ]
     },
-    "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-core/contracts/libraries/UQ112x112.sol": {
-      "lastModificationDate": 1734070901768,
+    "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-core/contracts/libraries/UQ112x112.sol": {
+      "lastModificationDate": 1758821011178,
       "contentHash": "6d0fa34623c40418749437605eeb2963",
       "sourceName": "contracts/libraries/UQ112x112.sol",
       "solcConfig": {
@@ -318,8 +204,46 @@
         "UQ112x112"
       ]
     },
-    "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-core/contracts/interfaces/IERC20.sol": {
-      "lastModificationDate": 1734070971672,
+    "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-core/contracts/libraries/Math.sol": {
+      "lastModificationDate": 1758821011178,
+      "contentHash": "8bd0f252761397f299bdbe47e67ce8ab",
+      "sourceName": "contracts/libraries/Math.sol",
+      "solcConfig": {
+        "version": "0.5.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 999999
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "evm.bytecode.object",
+                "evm.deployedBytecode.object",
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "evmVersion": "istanbul"
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.5.16"
+      ],
+      "artifacts": [
+        "Math"
+      ]
+    },
+    "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-core/contracts/interfaces/IERC20.sol": {
+      "lastModificationDate": 1758821011177,
       "contentHash": "3ead411860971be8f3d2df3a17d82928",
       "sourceName": "contracts/interfaces/IERC20.sol",
       "solcConfig": {
@@ -356,9 +280,9 @@
         "IERC20"
       ]
     },
-    "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-core/contracts/interfaces/IPixpelSwapFactory.sol": {
-      "lastModificationDate": 1734070925818,
-      "contentHash": "0000a3f790eb85b02f8243b77ca14d4f",
+    "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-core/contracts/interfaces/IPixpelSwapFactory.sol": {
+      "lastModificationDate": 1759142037540,
+      "contentHash": "90ed1f37e5c3367af9c0402fbf8c3f57",
       "sourceName": "contracts/interfaces/IPixpelSwapFactory.sol",
       "solcConfig": {
         "version": "0.5.17",
@@ -394,8 +318,8 @@
         "IPixpelSwapFactory"
       ]
     },
-    "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-core/contracts/interfaces/IPixpelSwapCallee.sol": {
-      "lastModificationDate": 1734070942851,
+    "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-core/contracts/interfaces/IPixpelSwapCallee.sol": {
+      "lastModificationDate": 1758821011178,
       "contentHash": "2a89e2dad300f788e89cc9267b36f7bf",
       "sourceName": "contracts/interfaces/IPixpelSwapCallee.sol",
       "solcConfig": {
@@ -432,9 +356,85 @@
         "IPixpelSwapCallee"
       ]
     },
-    "/home/rauhan/Platform-EVM-Dex-Contracts/pixpel-core/contracts/PixpelSwapFactory.sol": {
-      "lastModificationDate": 1753428326648,
-      "contentHash": "681b1e41664dde4e70db2c0cc6f38126",
+    "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-core/contracts/libraries/SafeMath.sol": {
+      "lastModificationDate": 1758821011178,
+      "contentHash": "1ac91121cab49a84ce8e5ae199f5b6f6",
+      "sourceName": "contracts/libraries/SafeMath.sol",
+      "solcConfig": {
+        "version": "0.5.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 999999
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "evm.bytecode.object",
+                "evm.deployedBytecode.object",
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "evmVersion": "istanbul"
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.5.16"
+      ],
+      "artifacts": [
+        "SafeMath"
+      ]
+    },
+    "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-core/contracts/interfaces/IPixpelSwapERC20.sol": {
+      "lastModificationDate": 1758821011178,
+      "contentHash": "bb718d768bb3f3b34b05ab56e1bcdcf0",
+      "sourceName": "contracts/interfaces/IPixpelSwapERC20.sol",
+      "solcConfig": {
+        "version": "0.5.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 999999
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "evm.bytecode.object",
+                "evm.deployedBytecode.object",
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "evmVersion": "istanbul"
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.5.16"
+      ],
+      "artifacts": [
+        "IPixpelSwapERC20"
+      ]
+    },
+    "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-core/contracts/PixpelSwapFactory.sol": {
+      "lastModificationDate": 1759216124233,
+      "contentHash": "e53ab14e938bab87ec268fb9a1fb055d",
       "sourceName": "contracts/PixpelSwapFactory.sol",
       "solcConfig": {
         "version": "0.5.17",
@@ -471,6 +471,46 @@
       ],
       "artifacts": [
         "PixpelSwapFactory"
+      ]
+    },
+    "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-core/contracts/test/ERC20.sol": {
+      "lastModificationDate": 1758821011178,
+      "contentHash": "be7339d13bd2e809d869f8e86a6c2fef",
+      "sourceName": "contracts/test/ERC20.sol",
+      "solcConfig": {
+        "version": "0.5.17",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 999999
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "evm.bytecode.object",
+                "evm.deployedBytecode.object",
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "evmVersion": "istanbul"
+        }
+      },
+      "imports": [
+        "../PixpelSwapERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.5.16"
+      ],
+      "artifacts": [
+        "ERC20"
       ]
     }
   }

@@ -26,7 +26,7 @@ describe('PixpelSwapFactory - SKALE WETH Restriction', () => {
     const [deployer] = provider.getWallets()
     wallet = deployer
 
-    factory = await deployContract(deployer, PixpelSwapFactoryArtifact, [deployer.address])
+    factory = await deployContract(deployer, PixpelSwapFactoryArtifact, [])
   })
 
   it('reverts when tokenA is SKALE_WETH', async () => {

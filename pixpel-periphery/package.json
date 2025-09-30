@@ -15,7 +15,6 @@
     "contracts"
   ],
   "dependencies": {
-    "@nomicfoundation/hardhat-verify": "^2.0.12",
     "@nomiclabs/hardhat-ethers": "^2.2.3",
     "@uniswap/lib": "4.0.1-alpha",
     "@uniswap/v2-core": "^1.0.1",
@@ -29,6 +28,7 @@
     "@nomicfoundation/hardhat-ignition-ethers": "^0.15.14",
     "@nomicfoundation/hardhat-network-helpers": "^1.1.0",
     "@nomicfoundation/hardhat-toolbox": "^6.1.0",
+    "@nomicfoundation/hardhat-verify": "2.1.1",
     "@nomicfoundation/ignition-core": "^0.15.13",
     "@typechain/ethers-v6": "^0.5.0",
     "@typechain/hardhat": "^9.0.0",

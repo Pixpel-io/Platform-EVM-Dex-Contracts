@@ -13,21 +13,18 @@ async function main() {
   // Create wallet instance
   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider)
 
-  // Fee setter address
-  const feeToSetter = wallet.address // Can be modified if different
-
   console.log('Deploying contracts with account:', wallet.address)
 
   // Deploy PixpelSwap contract using ethereum-waffle's deployContract function
-  const factory = await deployContract(wallet, PixpelSwapFactory, [feeToSetter], {
+  const factory = await deployContract(wallet, PixpelSwapFactory, [], {
     gasLimit: 4700000,
     gasPrice: ethers.utils.parseUnits('30', 'gwei') // Example gas price, adjust as needed
   })
   console.log('PixpelSwapFactory deployed at:', factory.address)
   const feeTo = await factory.feeTo()
-  const FeeToSetter = await factory.feeToSetter()
+  const admin = await factory.admin()
   console.log(`PixpelSwap feeTo: ${feeTo}`)
-  console.log(`PixpelSwap feeToSetter: ${feeToSetter}`)
+  console.log(`PixpelSwap Admin: ${admin}`)
 }
 
 main().catch(error => {

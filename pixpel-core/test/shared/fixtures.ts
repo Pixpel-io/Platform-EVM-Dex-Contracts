@@ -17,7 +17,17 @@ const overrides = {
 }
 
 export async function factoryFixture(_: Web3Provider, [wallet]: Wallet[]): Promise<FactoryFixture> {
-  const factory = await deployContract(wallet, PixpelSwapFactory, [wallet.address], overrides)
+  const factory = await deployContract(wallet, PixpelSwapFactory, [], overrides)
+
+  // grant roles explicitly for clarity
+  const PAIR_CREATOR_ROLE = await factory.PAIR_CREATOR_ROLE()
+  const FEE_MANAGER_ROLE = await factory.FEE_MANAGER_ROLE()
+  const CHAIN_MANAGER_ROLE = await factory.CHAIN_MANAGER_ROLE()
+
+  await factory.grantRole(PAIR_CREATOR_ROLE, wallet.address, overrides)
+  await factory.grantRole(FEE_MANAGER_ROLE, wallet.address, overrides)
+  await factory.grantRole(CHAIN_MANAGER_ROLE, wallet.address, overrides)
+
   return { factory }
 }
 

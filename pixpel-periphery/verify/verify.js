@@ -1,20 +1,10 @@
 const { run } = require('hardhat')
 const { ethers } = require('ethers')
-const {
-  Factory,
-  Router2,
-  amoyRouter,
-  AmoyFactory,
-  Weth,
-  Token,
-  Token1,
-  SkaleRouter,
-  SkaleToken4,
-  skaleUSDC
-} = require('../deployedAddress')
+const addresses = require('../deployedAddress')
+
 async function verifyContract() {
-  const contractAddress = amoyRouter // Replace with actual contract address
-  const constructorArguments = [AmoyFactory, Weth]
+  const contractAddress = addresses.amoy.Router
+  const constructorArguments = [addresses.amoy.Factory, addresses.amoy.Weth]
 
   console.log('Verifying contract...')
   try {

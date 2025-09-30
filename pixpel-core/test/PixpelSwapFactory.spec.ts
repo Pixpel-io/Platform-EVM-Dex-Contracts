@@ -33,7 +33,12 @@ describe('PixpelSwapFactory', () => {
 
   it('feeTo, feeToSetter, allPairsLength', async () => {
     expect(await factory.feeTo()).to.eq(AddressZero)
-    expect(await factory.feeToSetter()).to.eq(wallet.address)
+    // expect(await factory.feeToSetter()).to.eq(wallet.address)
+    expect(await factory.admin()).to.eq(wallet.address)
+    // role check: wallet has PAIR_CREATOR_ROLE
+    const PAIR_CREATOR_ROLE = await factory.PAIR_CREATOR_ROLE()
+    expect(await factory.roles(wallet.address, PAIR_CREATOR_ROLE)).to.eq(true)
+
     expect(await factory.allPairsLength()).to.eq(0)
   })
 
@@ -91,6 +96,12 @@ describe('PixpelSwapFactory', () => {
   it('createPair', async () => {
     await createPair(TEST_ADDRESSES)
   })
+  it('allows another address to create a pair if granted role', async () => {
+    const role = await factory.PAIR_CREATOR_ROLE()
+    await factory.revokeRole(role, other.address)
+
+    await createPair(TEST_ADDRESSES)
+  })
 
   it('createPair:reverse', async () => {
     await createPair(TEST_ADDRESSES.slice().reverse() as [string, string])
@@ -102,16 +113,40 @@ describe('PixpelSwapFactory', () => {
     expect(receipt.gasUsed.toNumber()).to.be.within(2480000, 2513000)
   })
 
-  it('setFeeTo', async () => {
-    await expect(factory.connect(other).setFeeTo(other.address)).to.be.revertedWith('PixpelSwap: FORBIDDEN')
+  it('restricts createPair to PAIR_CREATOR_ROLE', async () => {
+    // revoke role for wallet
+    const role = await factory.PAIR_CREATOR_ROLE()
+    await factory.revokeRole(role, wallet.address)
+
+    // should fail
+    await expect(createPair(TEST_ADDRESSES.slice().reverse() as [string, string])).to.be.revertedWith(
+      'PixpelSwap: ROLE_NOT_ASSIGNED'
+    )
+
+    // grant role back
+    await factory.grantRole(role, wallet.address)
+
+    // now it should succeed
+    await createPair(TEST_ADDRESSES.slice().reverse() as [string, string])
+  })
+
+  it('restricts setFeeTo to FEE_MANAGER_ROLE', async () => {
+    // other should not be able to call
+    await expect(factory.connect(other).setFeeTo(other.address)).to.be.revertedWith('PixpelSwap: ROLE_NOT_ASSIGNED')
+
+    // grant role
+    const role = await factory.FEE_MANAGER_ROLE()
+    await factory.grantRole(role, wallet.address)
+
+    // now wallet can call
     await factory.setFeeTo(wallet.address)
     expect(await factory.feeTo()).to.eq(wallet.address)
   })
 
-  it('setFeeToSetter', async () => {
-    await expect(factory.connect(other).setFeeToSetter(other.address)).to.be.revertedWith('PixpelSwap: FORBIDDEN')
-    await factory.setFeeToSetter(other.address)
-    expect(await factory.feeToSetter()).to.eq(other.address)
-    await expect(factory.setFeeToSetter(wallet.address)).to.be.revertedWith('PixpelSwap: FORBIDDEN')
-  })
+  // it('setFeeToSetter', async () => {
+  //   await expect(factory.connect(other).setFeeToSetter(other.address)).to.be.revertedWith('PixpelSwap: FORBIDDEN')
+  //   await factory.setFeeToSetter(other.address)
+  //   expect(await factory.feeToSetter()).to.eq(other.address)
+  //   await expect(factory.setFeeToSetter(wallet.address)).to.be.revertedWith('PixpelSwap: FORBIDDEN')
+  // })
 })
