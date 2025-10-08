@@ -2,13 +2,14 @@ require('@nomiclabs/hardhat-ethers')
 require('@nomicfoundation/hardhat-verify')
 require('dotenv').config()
 require('@nomicfoundation/hardhat-toolbox')
-
+// require('hardhat-contract-sizer')
 module.exports = {
   solidity: {
     version: '0.6.12',
     settings: {
       optimizer: {
         enabled: true,
+
         runs: 999999 // Match Waffle's optimizer runs
       },
       outputSelection: {
@@ -19,6 +20,11 @@ module.exports = {
       },
       evmVersion: 'istanbul' // Match Waffle's EVM version
     }
+  },
+  contractSizer: {
+    alphaSort: true,
+    disambiguatePaths: false,
+    runOnCompile: true //  should be valid
   },
   networks: {
     amoy: {

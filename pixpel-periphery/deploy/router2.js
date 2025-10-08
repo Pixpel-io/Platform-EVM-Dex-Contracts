@@ -14,10 +14,15 @@ async function main() {
   console.log('Deploying contracts with account:', wallet.address)
 
   // Deploy PixpelSwap contract using ethereum-waffle's deployContract function
-  const router2 = await deployContract(wallet, PixpelSwapRouter02, [address.amoy.Factory, address.amoy.Weth], {
-    gasLimit: 9000000,
-    gasPrice: ethers.utils.parseUnits('30', 'gwei') // Example gas price, adjust as needed
-  })
+  const router2 = await deployContract(
+    wallet,
+    PixpelSwapRouter02,
+    [address.skale.Factory, address.skale.Weth, address.skale.LaunchPadAddress, address.skale.LPFundManager],
+    {
+      gasLimit: 9000000,
+      gasPrice: ethers.utils.parseUnits('30', 'gwei') // Example gas price, adjust as needed
+    }
+  )
 
   console.log('PixpelSwapRouter2 deployed at:', router2.address)
 }

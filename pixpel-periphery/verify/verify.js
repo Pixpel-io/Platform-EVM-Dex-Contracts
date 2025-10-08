@@ -3,8 +3,13 @@ const { ethers } = require('ethers')
 const addresses = require('../deployedAddress')
 
 async function verifyContract() {
-  const contractAddress = addresses.amoy.Router
-  const constructorArguments = [addresses.amoy.Factory, addresses.amoy.Weth]
+  const contractAddress = addresses.skale.Router
+  const constructorArguments = [
+    addresses.skale.Factory,
+    addresses.skale.Weth,
+    addresses.skale.LaunchPadAddress,
+    addresses.skale.LPFundManager
+  ]
 
   console.log('Verifying contract...')
   try {

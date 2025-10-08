@@ -1,41 +1,72 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.6.0;
+pragma solidity 0.6.12;
 
 import './interfaces/IPixpelSwapFactory.sol';
 import '@uniswap/lib/contracts/libraries/TransferHelper.sol';
-
 import './interfaces/IPixpelSwapRouter02.sol';
 import './libraries/PixpelSwapLibrary.sol';
 import './libraries/SafeMath.sol';
 import './interfaces/IERC20.sol';
 import './interfaces/IWETH.sol';
+import './interfaces/ILaunchpad.sol';
 
 contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
     using SafeMath for uint;
-
     address public immutable override factory;
     address public immutable override WETH;
+    address public LAUNCHPAD;
+    address public LPFUNDMANAGER;
     uint256 public SKALE_CHAIN_ID = 37084624;
     address public owner;
-
+    mapping(address => bool) public isAllowedToken;
     //only for test
     // uint256 public chainIdOverride;
     event SkaleRouterConfigUpdated(uint256 newChainId);
 
-    modifier ensure(uint deadline) {
-        require(deadline >= block.timestamp, 'PixpelSwapRouter: EXPIRED');
-        _;
-    }
-
-    constructor(address _factory, address _WETH) public {
+    constructor(address _factory, address _WETH, address _LAUNCHPAD, address _LPFundManager) public {
         factory = _factory;
         WETH = _WETH;
+        LAUNCHPAD = _LAUNCHPAD;
+        LPFUNDMANAGER = _LPFundManager;
         owner = msg.sender;
     }
 
     receive() external payable {
         if (msg.sender != WETH) {
             revert('PixpelSwapRouter: Only WETH allowed');
+        }
+    }
+
+    // ---- internal helpers replacing modifiers ----
+    function _checkDeadline(uint deadline) internal view {
+        require(deadline >= block.timestamp, 'PixpelSwapRouter: EXPIRED');
+    }
+
+    function _onlyOwner() internal view {
+        require(msg.sender == owner, 'PixpelSwapRouter: FORBIDDEN');
+    }
+
+    function _onlyNonSkale() internal view {
+        uint256 chainId;
+        assembly {
+            chainId := chainid()
+        }
+        require(chainId != SKALE_CHAIN_ID, 'PixpelSwapRouter: SKALE network not supported');
+    }
+
+    // ---- internal helper for launchpad token restriction ----
+    function _restrictLaunchpadTokens(address token) internal view {
+        if (ILaunchpad(LAUNCHPAD).isTokenUsedInValidLaunchpad(token)) {
+            require(msg.sender == LPFUNDMANAGER, 'Only fund manager can call when token is used');
+        }
+    }
+
+    function _restrictLaunchpadTokens(address tokenA, address tokenB) internal view {
+        if (
+            ILaunchpad(LAUNCHPAD).isTokenUsedInValidLaunchpad(tokenA) ||
+            ILaunchpad(LAUNCHPAD).isTokenUsedInValidLaunchpad(tokenB)
+        ) {
+            require(msg.sender == LPFUNDMANAGER, 'Only fund manager can call when token is used');
         }
     }
 
@@ -83,7 +114,9 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         uint amountBMin,
         address to,
         uint deadline
-    ) external virtual override ensure(deadline) returns (uint amountA, uint amountB, uint liquidity) {
+    ) external virtual override returns (uint amountA, uint amountB, uint liquidity) {
+        _checkDeadline(deadline);
+        _restrictLaunchpadTokens(tokenA, tokenB);
         (amountA, amountB) = _addLiquidity(tokenA, tokenB, amountADesired, amountBDesired, amountAMin, amountBMin);
         address pair = PixpelSwapLibrary.pairFor(factory, tokenA, tokenB);
         TransferHelper.safeTransferFrom(tokenA, msg.sender, pair, amountA);
@@ -98,19 +131,19 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         uint amountETHMin,
         address to,
         uint deadline
-    ) external payable virtual override ensure(deadline) returns (uint amountToken, uint amountETH, uint liquidity) {
-        uint256 chainId;
-        assembly {
-            chainId := chainid()
-        }
+    ) external payable virtual override returns (uint amountToken, uint amountETH, uint liquidity) {
+        _checkDeadline(deadline);
+        //only for test use this in other functions as well
+        //     uint256 chainId;
 
-        //only for test
+        // assembly {
+        //     chainId := chainid()
+        // }
         // if (chainIdOverride != 0) {
         //     chainId = chainIdOverride;
         // }
-
-        require(chainId != SKALE_CHAIN_ID, 'PixpelSwapRouter: SKALE network not supported');
-
+        _onlyNonSkale();
+        _restrictLaunchpadTokens(token);
         (amountToken, amountETH) = _addLiquidity(
             token,
             WETH,
@@ -125,7 +158,7 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         assert(IWETH(WETH).transfer(pair, amountETH));
         liquidity = IPixpelSwapPair(pair).mint(to);
         // refund dust eth, if any
-        if (msg.value > amountETH) TransferHelper.safeTransferETH(msg.sender, msg.value - amountETH);
+        if (msg.value > amountETH) TransferHelper.safeTransferETH(msg.sender, msg.value.sub(amountETH));
     }
 
     // **** REMOVE LIQUIDITY ****
@@ -137,7 +170,9 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         uint amountBMin,
         address to,
         uint deadline
-    ) public virtual override ensure(deadline) returns (uint amountA, uint amountB) {
+    ) public virtual override returns (uint amountA, uint amountB) {
+        _checkDeadline(deadline);
+        _restrictLaunchpadTokens(tokenA, tokenB);
         address pair = PixpelSwapLibrary.pairFor(factory, tokenA, tokenB);
         IPixpelSwapPair(pair).transferFrom(msg.sender, pair, liquidity); // send liquidity to pair
         (uint amount0, uint amount1) = IPixpelSwapPair(pair).burn(to);
@@ -154,18 +189,10 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         uint amountETHMin,
         address to,
         uint deadline
-    ) public virtual override ensure(deadline) returns (uint amountToken, uint amountETH) {
-        uint256 chainId;
-
-        assembly {
-            chainId := chainid()
-        }
-        //only for test
-        // if (chainIdOverride != 0) {
-        //     chainId = chainIdOverride;
-        // }
-        require(chainId != SKALE_CHAIN_ID, 'PixpelSwapRouter: SKALE network not supported');
-
+    ) public virtual override returns (uint amountToken, uint amountETH) {
+        _checkDeadline(deadline);
+        _onlyNonSkale();
+        _restrictLaunchpadTokens(token);
         (amountToken, amountETH) = removeLiquidity(
             token,
             WETH,
@@ -211,17 +238,7 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         bytes32 r,
         bytes32 s
     ) external virtual override returns (uint amountToken, uint amountETH) {
-        uint256 chainId;
-
-        assembly {
-            chainId := chainid()
-        }
-        //only for test
-        // if (chainIdOverride != 0) {
-        //     chainId = chainIdOverride;
-        // }
-        require(chainId != SKALE_CHAIN_ID, 'PixpelSwapRouter: SKALE network not supported');
-
+        _onlyNonSkale();
         address pair = PixpelSwapLibrary.pairFor(factory, token, WETH);
         uint value = approveMax ? uint(-1) : liquidity;
         IPixpelSwapPair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
@@ -236,7 +253,9 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         uint amountETHMin,
         address to,
         uint deadline
-    ) public virtual override ensure(deadline) returns (uint amountETH) {
+    ) public virtual override returns (uint amountETH) {
+        _checkDeadline(deadline);
+        _onlyNonSkale();
         (, amountETH) = removeLiquidity(token, WETH, liquidity, amountTokenMin, amountETHMin, address(this), deadline);
         TransferHelper.safeTransfer(token, to, IERC20(token).balanceOf(address(this)));
         IWETH(WETH).withdraw(amountETH);
@@ -255,17 +274,7 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         bytes32 r,
         bytes32 s
     ) external virtual override returns (uint amountETH) {
-        uint256 chainId;
-
-        assembly {
-            chainId := chainid()
-        }
-        //only for test
-        // if (chainIdOverride != 0) {
-        //     chainId = chainIdOverride;
-        // }
-        require(chainId != SKALE_CHAIN_ID, 'PixpelSwapRouter: SKALE network not supported');
-
+        _onlyNonSkale();
         address pair = PixpelSwapLibrary.pairFor(factory, token, WETH);
         uint value = approveMax ? uint(-1) : liquidity;
         IPixpelSwapPair(pair).permit(msg.sender, address(this), value, deadline, v, r, s);
@@ -280,7 +289,6 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
     }
 
     // **** SWAP ****
-    // requires the initial amount to have already been sent to the first pair
     function _swap(uint[] memory amounts, address[] memory path, address _to) internal virtual {
         for (uint i; i < path.length - 1; i++) {
             (address input, address output) = (path[i], path[i + 1]);
@@ -303,7 +311,9 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         address[] calldata path,
         address to,
         uint deadline
-    ) external virtual override ensure(deadline) returns (uint[] memory amounts) {
+    ) external virtual override returns (uint[] memory amounts) {
+        _checkDeadline(deadline);
+        _restrictLaunchpadTokens(path[0], path[1]);
         amounts = PixpelSwapLibrary.getAmountsOut(factory, amountIn, path);
         require(amounts[amounts.length - 1] >= amountOutMin, 'PixpelSwapRouter: INSUFFICIENT_OUTPUT_AMOUNT');
         TransferHelper.safeTransferFrom(
@@ -321,7 +331,9 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         address[] calldata path,
         address to,
         uint deadline
-    ) external virtual override ensure(deadline) returns (uint[] memory amounts) {
+    ) external virtual override returns (uint[] memory amounts) {
+        _checkDeadline(deadline);
+        _restrictLaunchpadTokens(path[0], path[1]);
         amounts = PixpelSwapLibrary.getAmountsIn(factory, amountOut, path);
         require(amounts[0] <= amountInMax, 'PixpelSwapRouter: EXCESSIVE_INPUT_AMOUNT');
         TransferHelper.safeTransferFrom(
@@ -338,18 +350,10 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         address[] calldata path,
         address to,
         uint deadline
-    ) external payable virtual override ensure(deadline) returns (uint[] memory amounts) {
-        uint256 chainId;
-
-        assembly {
-            chainId := chainid()
-        }
-        //only for test
-        // if (chainIdOverride != 0) {
-        //     chainId = chainIdOverride;
-        // }
-        require(chainId != SKALE_CHAIN_ID, 'PixpelSwapRouter: SKALE network not supported');
-
+    ) external payable virtual override returns (uint[] memory amounts) {
+        _checkDeadline(deadline);
+        _onlyNonSkale();
+        _restrictLaunchpadTokens(path[0], path[1]);
         require(path[0] == WETH, 'PixpelSwapRouter: INVALID_PATH');
         amounts = PixpelSwapLibrary.getAmountsOut(factory, msg.value, path);
         require(amounts[amounts.length - 1] >= amountOutMin, 'PixpelSwapRouter: INSUFFICIENT_OUTPUT_AMOUNT');
@@ -364,9 +368,10 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         address[] calldata path,
         address to,
         uint deadline
-    ) external virtual override ensure(deadline) returns (uint[] memory amounts) {
-        uint256 chainId;
-
+    ) external virtual override returns (uint[] memory amounts) {
+        _checkDeadline(deadline);
+        _onlyNonSkale();
+        _restrictLaunchpadTokens(path[0], path[1]);
         require(path[path.length - 1] == WETH, 'PixpelSwapRouter: INVALID_PATH');
         amounts = PixpelSwapLibrary.getAmountsIn(factory, amountOut, path);
         require(amounts[0] <= amountInMax, 'PixpelSwapRouter: EXCESSIVE_INPUT_AMOUNT');
@@ -387,17 +392,10 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         address[] calldata path,
         address to,
         uint deadline
-    ) external virtual override ensure(deadline) returns (uint[] memory amounts) {
-        uint256 chainId;
-        assembly {
-            chainId := chainid()
-        }
-        //only for test
-        // if (chainIdOverride != 0) {
-        //     chainId = chainIdOverride;
-        // }
-        require(chainId != SKALE_CHAIN_ID, 'PixpelSwapRouter: SKALE network not supported');
-
+    ) external virtual override returns (uint[] memory amounts) {
+        _checkDeadline(deadline);
+        _onlyNonSkale();
+        _restrictLaunchpadTokens(path[0], path[1]);
         require(path[path.length - 1] == WETH, 'PixpelSwapRouter: INVALID_PATH');
         amounts = PixpelSwapLibrary.getAmountsOut(factory, amountIn, path);
         require(amounts[amounts.length - 1] >= amountOutMin, 'PixpelSwapRouter: INSUFFICIENT_OUTPUT_AMOUNT');
@@ -417,7 +415,10 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         address[] calldata path,
         address to,
         uint deadline
-    ) external payable virtual override ensure(deadline) returns (uint[] memory amounts) {
+    ) external payable virtual override returns (uint[] memory amounts) {
+        _checkDeadline(deadline);
+        _onlyNonSkale();
+        _restrictLaunchpadTokens(path[0], path[1]);
         require(path[0] == WETH, 'PixpelSwapRouter: INVALID_PATH');
         amounts = PixpelSwapLibrary.getAmountsIn(factory, amountOut, path);
         require(amounts[0] <= msg.value, 'PixpelSwapRouter: EXCESSIVE_INPUT_AMOUNT');
@@ -425,11 +426,10 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         assert(IWETH(WETH).transfer(PixpelSwapLibrary.pairFor(factory, path[0], path[1]), amounts[0]));
         _swap(amounts, path, to);
         // refund dust eth, if any
-        if (msg.value > amounts[0]) TransferHelper.safeTransferETH(msg.sender, msg.value - amounts[0]);
+        if (msg.value > amounts[0]) TransferHelper.safeTransferETH(msg.sender, msg.value.sub(amounts[0]));
     }
 
     // **** SWAP (supporting fee-on-transfer tokens) ****
-    // requires the initial amount to have already been sent to the first pair
     function _swapSupportingFeeOnTransferTokens(address[] memory path, address _to) internal virtual {
         for (uint i; i < path.length - 1; i++) {
             (address input, address output) = (path[i], path[i + 1]);
@@ -456,7 +456,9 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         address[] calldata path,
         address to,
         uint deadline
-    ) external virtual override ensure(deadline) {
+    ) external virtual override {
+        _checkDeadline(deadline);
+        _restrictLaunchpadTokens(path[0], path[1]);
         TransferHelper.safeTransferFrom(
             path[0],
             msg.sender,
@@ -476,7 +478,10 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         address[] calldata path,
         address to,
         uint deadline
-    ) external payable virtual override ensure(deadline) {
+    ) external payable virtual override {
+        _checkDeadline(deadline);
+        _onlyNonSkale();
+        _restrictLaunchpadTokens(path[0], path[1]);
         require(path[0] == WETH, 'PixpelSwapRouter: INVALID_PATH');
         uint amountIn = msg.value;
         IWETH(WETH).deposit{value: amountIn}();
@@ -495,7 +500,10 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         address[] calldata path,
         address to,
         uint deadline
-    ) external virtual override ensure(deadline) {
+    ) external virtual override {
+        _checkDeadline(deadline);
+        _onlyNonSkale();
+        _restrictLaunchpadTokens(path[0], path[1]);
         require(path[path.length - 1] == WETH, 'PixpelSwapRouter: INVALID_PATH');
         TransferHelper.safeTransferFrom(
             path[0],
@@ -546,16 +554,20 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
     }
 
     function setOwner(address _owner) external {
-        require(msg.sender == owner, 'PixpelSwapRouter: FORBIDDEN');
+        _onlyOwner();
         require(_owner != address(0), 'PixpelSwapRouter: ZERO_ADDRESS');
         owner = _owner;
     }
 
     function setSkaleRouterConfig(uint256 _chainId) external {
-        require(msg.sender == owner, 'PixpelSwapRouter: FORBIDDEN');
-
+        _onlyOwner();
         SKALE_CHAIN_ID = _chainId;
-
         emit SkaleRouterConfigUpdated(_chainId);
+    }
+
+    function updateLaunchpad(address _launchpad) external {
+        _onlyOwner();
+        require(_launchpad != address(0), 'PixpelSwapRouter: ZERO_ADDRESS');
+        LAUNCHPAD = _launchpad;
     }
 }
