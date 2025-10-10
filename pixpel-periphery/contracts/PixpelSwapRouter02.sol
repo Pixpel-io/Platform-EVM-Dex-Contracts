@@ -570,4 +570,9 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
         require(_launchpad != address(0), 'PixpelSwapRouter: ZERO_ADDRESS');
         LAUNCHPAD = _launchpad;
     }
+    function updateFundManager(address _fundManager) external {
+        _onlyOwner();
+        require(_fundManager != address(0), 'PixpelSwapRouter: ZERO_ADDRESS');
+        LPFUNDMANAGER = _fundManager;
+    }
 }
