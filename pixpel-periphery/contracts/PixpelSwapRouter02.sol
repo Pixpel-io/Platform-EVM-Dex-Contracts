@@ -16,7 +16,7 @@ contract PixpelSwapRouter02 is IPixpelSwapRouter02 {
     address public immutable override WETH;
     address public LAUNCHPAD;
     address public LPFUNDMANAGER;
-    uint256 public SKALE_CHAIN_ID = 37084624;
+    uint256 public SKALE_CHAIN_ID = 1482601649;
     address public owner;
     mapping(address => bool) public isAllowedToken;
     //only for test

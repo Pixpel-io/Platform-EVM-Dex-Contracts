@@ -4,7 +4,7 @@ const { deployContract } = require('ethereum-waffle')
 
 // Import compiled contract artifacts
 
-const Weth = require('../build/WETH9.json')
+const PixpelSwapFactory = require('../build/PixpelSwapFactorySkale.json')
 
 async function main() {
   // Connect to Polygon network
@@ -16,11 +16,18 @@ async function main() {
   console.log('Deploying contracts with account:', wallet.address)
 
   // Deploy PixpelSwap contract using ethereum-waffle's deployContract function
-  const weth = await deployContract(wallet, Weth, [], {
+  const factory = await deployContract(wallet, PixpelSwapFactory, [], {
     gasLimit: 4700000,
-    gasPrice: ethers.utils.parseUnits('120', 'gwei') // Example gas price, adjust as needed
+    gasPrice: ethers.utils.parseUnits('30', 'gwei') // Example gas price, adjust as needed
   })
-  console.log('Weth deployed at:', weth.address)
+  console.log('PixpelSwapFactory deployed at:', factory.address)
+  const feeTo = await factory.feeTo()
+  const superAdmin = await factory.superAdmin()
+  const isAdmin = await factory.isAdmin(wallet.address)
+  console.log(`PixpelSwap feeTo: ${feeTo}`)
+
+  console.log('PixpelSwap superAdmin:', superAdmin)
+  console.log('Is deployer admin?:', isAdmin)
 }
 
 main().catch(error => {

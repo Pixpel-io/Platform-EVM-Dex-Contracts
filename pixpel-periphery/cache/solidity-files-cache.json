@@ -14,17 +14,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -59,17 +57,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -97,17 +93,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -120,44 +114,6 @@
       ],
       "artifacts": [
         "IPixpelSwapV1Factory"
-      ]
-    },
-    "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-periphery/contracts/interfaces/V1/IPixpelSwapExchange.sol": {
-      "lastModificationDate": 1758821011187,
-      "contentHash": "494d782291a7b38392052a4d1ab20f48",
-      "sourceName": "contracts/interfaces/V1/IPixpelSwapExchange.sol",
-      "solcConfig": {
-        "version": "0.6.12",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 999999
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "evmVersion": "istanbul"
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.5.0"
-      ],
-      "artifacts": [
-        "IPixpelSwapExchange"
       ]
     },
     "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-periphery/contracts/interfaces/IERC20.sol": {
@@ -173,17 +129,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -196,6 +150,42 @@
       ],
       "artifacts": [
         "IERC20"
+      ]
+    },
+    "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-periphery/contracts/interfaces/V1/IPixpelSwapExchange.sol": {
+      "lastModificationDate": 1758821011187,
+      "contentHash": "494d782291a7b38392052a4d1ab20f48",
+      "sourceName": "contracts/interfaces/V1/IPixpelSwapExchange.sol",
+      "solcConfig": {
+        "version": "0.6.12",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 999999
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "istanbul"
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.0"
+      ],
+      "artifacts": [
+        "IPixpelSwapExchange"
       ]
     },
     "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-periphery/contracts/interfaces/IPixpelSwapRouter01.sol": {
@@ -211,17 +201,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -249,17 +237,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -287,17 +273,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -333,17 +317,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -378,17 +360,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -404,8 +384,8 @@
       ]
     },
     "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-periphery/contracts/libraries/PixpelSwapLibrary.sol": {
-      "lastModificationDate": 1759216392465,
-      "contentHash": "3860f3e3ef3f9eea28b3f265402656f7",
+      "lastModificationDate": 1761913415068,
+      "contentHash": "0f8a4153d48a63e0bb63e1b256d6a8d2",
       "sourceName": "contracts/libraries/PixpelSwapLibrary.sol",
       "solcConfig": {
         "version": "0.6.12",
@@ -416,17 +396,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -457,17 +435,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -495,17 +471,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -533,17 +507,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -571,17 +543,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -609,17 +579,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -651,17 +619,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -689,17 +655,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -729,17 +693,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -769,17 +731,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -813,17 +773,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -854,17 +812,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -885,8 +841,8 @@
       ]
     },
     "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-periphery/contracts/PixpelSwapRouter02.sol": {
-      "lastModificationDate": 1760091079193,
-      "contentHash": "1c82dc6ce4895adbb0916d9232ddb568",
+      "lastModificationDate": 1761818156509,
+      "contentHash": "637ce2ae6e731e0e18f517590a9de149",
       "sourceName": "contracts/PixpelSwapRouter02.sol",
       "solcConfig": {
         "version": "0.6.12",
@@ -897,17 +853,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -944,17 +898,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -984,17 +936,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -1022,17 +972,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -1060,17 +1008,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -1106,17 +1052,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -1144,17 +1088,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -1189,17 +1131,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -1229,17 +1169,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },
@@ -1257,8 +1195,8 @@
       ]
     },
     "/home/pixpel/Pixpel/Platform-EVM-Dex-Contracts/pixpel-periphery/contracts/test/WETH9.sol": {
-      "lastModificationDate": 1758821011188,
-      "contentHash": "01aa895c81381410dcd360b1e44e6f5c",
+      "lastModificationDate": 1760703887426,
+      "contentHash": "e906bfc59f8130c150da3f40fb0754bb",
       "sourceName": "contracts/test/WETH9.sol",
       "solcConfig": {
         "version": "0.6.12",
@@ -1269,17 +1207,15 @@
           },
           "outputSelection": {
             "*": {
+              "": [
+                "ast"
+              ],
               "*": [
-                "evm.bytecode.object",
-                "evm.deployedBytecode.object",
                 "abi",
                 "evm.bytecode",
                 "evm.deployedBytecode",
                 "evm.methodIdentifiers",
                 "metadata"
-              ],
-              "": [
-                "ast"
               ]
             }
           },

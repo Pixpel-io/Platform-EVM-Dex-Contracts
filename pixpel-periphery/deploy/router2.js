@@ -7,7 +7,7 @@ const address = require('../deployedAddress')
 
 async function main() {
   // Connect to Polygon network
-  const provider = new ethers.providers.JsonRpcProvider(process.env.POLYGON_RPC_URL)
+  const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL)
   // Create wallet instance
   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider)
 
@@ -17,7 +17,7 @@ async function main() {
   const router2 = await deployContract(
     wallet,
     PixpelSwapRouter02,
-    [address.skale.Factory, address.skale.Weth, address.skale.LaunchPadAddress, address.skale.LPFundManager],
+    [address.avax.Factory, address.avax.Weth, address.avax.LaunchPadAddress, address.avax.LPFundManager],
     {
       gasLimit: 9000000,
       gasPrice: ethers.utils.parseUnits('30', 'gwei') // Example gas price, adjust as needed

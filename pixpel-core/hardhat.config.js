@@ -1,14 +1,17 @@
+const { avax } = require('./deployedAddress')
+
 require('@nomiclabs/hardhat-ethers')
 require('@nomicfoundation/hardhat-verify')
 require('dotenv').config()
 require('@nomicfoundation/hardhat-toolbox')
-
+// require('hardhat-contract-sizer')
 module.exports = {
   solidity: {
     version: '0.5.17',
     settings: {
       optimizer: {
         enabled: true,
+
         runs: 999999 // Match Waffle's optimizer runs
       },
       outputSelection: {
@@ -19,6 +22,11 @@ module.exports = {
       },
       evmVersion: 'istanbul' // Match Waffle's EVM version
     }
+  },
+  contractSizer: {
+    alphaSort: true,
+    disambiguatePaths: false,
+    runOnCompile: true //  should be valid
   },
   networks: {
     amoy: {
@@ -31,9 +39,24 @@ module.exports = {
       chainId: 37084624,
       accounts: [`0x${process.env.PRIVATE_KEY}`]
     },
+    'nebula-mainnet': {
+      url: 'https://mainnet.skalenodes.com/v1/green-giddy-denebola',
+      chainId: 1482601649,
+      accounts: [`0x${process.env.PRIVATE_KEY}`]
+    },
     l1x: {
       url: 'https://rpc.l1x.foundation',
       chainId: 1066,
+      accounts: [`0x${process.env.PRIVATE_KEY}`]
+    },
+    avax: {
+      url: 'https://api.avax.network/ext/bc/C/rpc',
+      chainId: 43114,
+      accounts: [`0x${process.env.PRIVATE_KEY}`]
+    },
+    polygon: {
+      url: 'https://polygon-mainnet.infura.io/v3/090cef2ffe354730bd646be862608f61',
+      chainId: 137,
       accounts: [`0x${process.env.PRIVATE_KEY}`]
     }
   },
@@ -42,7 +65,9 @@ module.exports = {
       'nebula-testnet': 'na',
       'nebula-mainnet': 'na',
       amoy: process.env.POLYGONSCAN_API_KEY,
+      avax: process.env.POLYGONSCAN_API_KEY,
       apiKey: process.env.POLYGONSCAN_API_KEY,
+      polygon: process.env.POLYGONSCAN_API_KEY,
       l1x: 'na' // If L1X explorer supports API key
     },
     customChains: [
@@ -77,6 +102,22 @@ module.exports = {
         urls: {
           apiURL: 'https://l1xapp.com/explorer/api',
           browserURL: 'https://l1xapp.com/explorer'
+        }
+      },
+      {
+        network: 'avax',
+        chainId: 43114,
+        urls: {
+          apiURL: 'https://api.snowtrace.io/api',
+          browserURL: 'https://snowtrace.io/'
+        }
+      },
+      {
+        network: 'polygon',
+        chainId: 137,
+        urls: {
+          apiURL: 'https://api.etherscan.io/v2/api?chainid=137',
+          browserURL: 'https://polygonscan.com/'
         }
       }
     ]

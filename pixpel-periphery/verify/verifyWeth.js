@@ -1,8 +1,10 @@
 const { run } = require('hardhat')
-const { SkaleFactory, AmoyFactory, AvaxFactory, SkaleNebulaFactory } = require('../deployedAddress')
+const { ethers } = require('ethers')
+const addresses = require('../deployedAddress')
+
 async function verifyContract() {
-  const contractAddress = AvaxFactory
-  const constructorArguments = ['0xfECBe146FcB9FcEF4c871442B2F53ff6D0f7Ff4c']
+  const contractAddress = addresses.skaleNebula.Weth
+  const constructorArguments = []
 
   console.log('Verifying contract...')
   try {
