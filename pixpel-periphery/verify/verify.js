@@ -3,12 +3,12 @@ const { ethers } = require('ethers')
 const addresses = require('../deployedAddress')
 
 async function verifyContract() {
-  const contractAddress = addresses.avax.Router
+  const contractAddress = addresses.seiMainnet.Router
   const constructorArguments = [
-    addresses.avax.Factory,
-    addresses.avax.Weth,
-    addresses.avax.LaunchPadAddress,
-    addresses.avax.LPFundManager
+    addresses.seiMainnet.Factory,
+    addresses.seiMainnet.Weth,
+    addresses.seiMainnet.LaunchPadAddress,
+    addresses.seiMainnet.LPFundManager
   ]
 
   console.log('Verifying contract...')

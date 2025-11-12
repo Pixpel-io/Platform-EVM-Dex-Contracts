@@ -1,4 +1,4 @@
-const { avax } = require('./deployedAddress')
+const { avax, seiMainnet } = require('./deployedAddress')
 
 require('@nomiclabs/hardhat-ethers')
 require('@nomicfoundation/hardhat-verify')
@@ -58,10 +58,24 @@ module.exports = {
       url: 'https://polygon-mainnet.infura.io/v3/090cef2ffe354730bd646be862608f61',
       chainId: 137,
       accounts: [`0x${process.env.PRIVATE_KEY}`]
+    },
+    // Sei testnet configuration
+    seitestnet: {
+      url: 'https://evm-rpc-testnet.sei-apis.com',
+      chainId: 1328, // Sei testnet chain ID
+      accounts: [`0x${process.env.PRIVATE_KEY}`]
+      // gasPrice: 2000000000 // 2 gwei = 2 nsei
+    },
+    // Sei mainnet configuration
+    seimainnet: {
+      url: 'https://evm-rpc.sei-apis.com',
+      chainId: 1329, // Sei mainnet chain ID
+      accounts: [`0x${process.env.PRIVATE_KEY}`]
+      // gasPrice: 2000000000 // 2 gwei = 2 nsei
     }
   },
   etherscan: {
-    // apiKey: process.env.POLYGONSCAN_API_KEY
+    // apiKey: process.env.POLYGONSCAN_API_KEY,
     apiKey: {
       'nebula-testnet': 'na',
       'nebula-mainnet': 'na',
@@ -69,7 +83,8 @@ module.exports = {
       avax: process.env.POLYGONSCAN_API_KEY,
       polygon: process.env.POLYGONSCAN_API_KEY,
       apiKey: process.env.POLYGONSCAN_API_KEY,
-      l1x: 'na' // If L1X explorer supports API key
+      l1x: 'na',
+      seimainnet: 'na'
     },
     customChains: [
       {
@@ -119,6 +134,14 @@ module.exports = {
         urls: {
           apiURL: 'https://api.etherscan.io/v2/api?chainid=137',
           browserURL: 'https://polygonscan.com/'
+        }
+      },
+      {
+        network: 'seimainnet',
+        chainId: 1329,
+        urls: {
+          apiURL: 'https://seitrace.com/pacific-1/api',
+          browserURL: 'https://seitrace.com'
         }
       }
     ]

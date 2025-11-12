@@ -3,7 +3,7 @@ const { ethers } = require('ethers')
 const addresses = require('../deployedAddress')
 
 async function verifyContract() {
-  const contractAddress = addresses.skaleNebula.Weth
+  const contractAddress = addresses.seiMainnet.Weth
   const constructorArguments = []
 
   console.log('Verifying contract...')

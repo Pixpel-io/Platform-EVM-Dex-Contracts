@@ -1,3 +1,5 @@
+const { seiMainnet } = require('../pixpel-periphery/deployedAddress')
+
 module.exports = {
   Amoy1Factory: '0x38d8959342B1c372cf45a7C529B8a2c370648e04',
   //SkaleFactory : '0x026c0Dd77075B89E0a1330Fb35e9CFA6c0D241c0'
@@ -6,5 +8,6 @@ module.exports = {
   AvaxRestrictedFactory: '0x432bBA9AEC800A6a2e655c2F4eD66D3B9653CdE3',
   AvaxFactory: '0x0E953D8fF8071A691cEff5f844C0c58332970c27',
   // SkaleNebulaFactory: '0xfA0C405d13907Aa8D6093A9BA25f62B6C3166798'
-  SkaleNebulaFactory: '0x718699c0d898EaBeA72A52655824D68b84a746F4'
+  SkaleNebulaFactory: '0x718699c0d898EaBeA72A52655824D68b84a746F4',
+  SeiMainnetFactory: '0xfA0C405d13907Aa8D6093A9BA25f62B6C3166798'
 }

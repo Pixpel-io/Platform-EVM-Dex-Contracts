@@ -17,7 +17,12 @@ async function main() {
   const router2 = await deployContract(
     wallet,
     PixpelSwapRouter02,
-    [address.avax.Factory, address.avax.Weth, address.avax.LaunchPadAddress, address.avax.LPFundManager],
+    [
+      address.seiMainnet.Factory,
+      address.seiMainnet.Weth,
+      address.seiMainnet.LaunchPadAddress,
+      address.seiMainnet.LPFundManager
+    ],
     {
       gasLimit: 9000000,
       gasPrice: ethers.utils.parseUnits('30', 'gwei') // Example gas price, adjust as needed
