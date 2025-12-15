@@ -1,3 +1,4 @@
+const { zeechainTestnet } = require('../pixpel-periphery/deployedAddress')
 const { avax } = require('./deployedAddress')
 
 require('@nomiclabs/hardhat-ethers')
@@ -64,7 +65,6 @@ module.exports = {
       url: 'https://evm-rpc-testnet.sei-apis.com',
       chainId: 1328, // Sei testnet chain ID
       accounts: [`0x${process.env.PRIVATE_KEY}`]
-      // gasPrice: 2000000000 // 2 gwei = 2 nsei
     },
     // Sei mainnet configuration
     seimainnet: {
@@ -72,20 +72,27 @@ module.exports = {
       chainId: 1329, // Sei mainnet chain ID
       accounts: [`0x${process.env.PRIVATE_KEY}`]
       // gasPrice: 2000000000 // 2 gwei = 2 nsei
+    },
+    zeechainTestnet: {
+      url: process.env.RPC_URL,
+      chainId: 8408,
+      accounts: [`0x${process.env.PRIVATE_KEY}`]
     }
   },
   etherscan: {
-    apiKey: process.env.POLYGONSCAN_API_KEY,
-    // apiKey: {
-    //   'nebula-testnet': 'na',
-    //   'nebula-mainnet': 'na',
-    //   amoy: process.env.POLYGONSCAN_API_KEY,
-    //   avax: process.env.POLYGONSCAN_API_KEY,
-    //   apiKey: process.env.POLYGONSCAN_API_KEY,
-    //   polygon: process.env.POLYGONSCAN_API_KEY,
-    //   l1x: 'na',
-    //   seimainnet: 'na'
-    // },
+    // apiKey: process.env.POLYGONSCAN_API_KEY,
+    apiKey: {
+      'nebula-testnet': 'na',
+      'nebula-mainnet': 'na',
+      amoy: process.env.POLYGONSCAN_API_KEY,
+      avax: process.env.POLYGONSCAN_API_KEY,
+      apiKey: process.env.POLYGONSCAN_API_KEY,
+      polygon: process.env.POLYGONSCAN_API_KEY,
+      l1x: 'na',
+      seimainnet: 'na',
+      seitestnet: 'na',
+      zeechainTestnet: 'na'
+    },
     customChains: [
       {
         network: 'amoy',
@@ -143,7 +150,26 @@ module.exports = {
           apiURL: 'https://seitrace.com/pacific-1/api',
           browserURL: 'https://seiscan.io/'
         }
+      },
+      {
+        network: 'seitestnet',
+        chainId: 1328,
+        urls: {
+          apiURL: 'https://seitrace.com/atlantic-2/api',
+          browserURL: 'https://testnet.seitrace.com'
+        }
+      },
+      {
+        network: 'zeechainTestnet',
+        chainId: 8408,
+        urls: {
+          apiURL: 'https://zentrace.io/api',
+          browserURL: 'https://zentrace.io'
+        }
       }
-    ]
+    ],
+    sourcify: {
+      enabled: true
+    }
   }
 }

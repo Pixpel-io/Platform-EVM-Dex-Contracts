@@ -23,6 +23,7 @@ module.exports = {
       evmVersion: 'istanbul' // Match Waffle's EVM version
     }
   },
+
   contractSizer: {
     alphaSort: true,
     disambiguatePaths: false,
@@ -72,6 +73,11 @@ module.exports = {
       chainId: 1329, // Sei mainnet chain ID
       accounts: [`0x${process.env.PRIVATE_KEY}`]
       // gasPrice: 2000000000 // 2 gwei = 2 nsei
+    },
+    zeechainTestnet: {
+      url: process.env.RPC_URL,
+      chainId: 8408,
+      accounts: [`0x${process.env.PRIVATE_KEY}`]
     }
   },
   etherscan: {
@@ -84,7 +90,9 @@ module.exports = {
       polygon: process.env.POLYGONSCAN_API_KEY,
       apiKey: process.env.POLYGONSCAN_API_KEY,
       l1x: 'na',
-      seimainnet: 'na'
+      seimainnet: 'na',
+      seitestnet: 'na',
+      zeechainTestnet: 'na'
     },
     customChains: [
       {
@@ -142,6 +150,22 @@ module.exports = {
         urls: {
           apiURL: 'https://seitrace.com/pacific-1/api',
           browserURL: 'https://seitrace.com'
+        }
+      },
+      {
+        network: 'seitestnet',
+        chainId: 1328,
+        urls: {
+          apiURL: 'https://seitrace.com/atlantic-2/api',
+          browserURL: 'https://testnet.seitrace.com'
+        }
+      },
+      {
+        network: 'zeechainTestnet',
+        chainId: 8408,
+        urls: {
+          apiURL: 'https://zentrace.io/api',
+          browserURL: 'https://zentrace.io'
         }
       }
     ]

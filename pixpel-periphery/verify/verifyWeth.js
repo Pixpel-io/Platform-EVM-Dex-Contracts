@@ -3,7 +3,7 @@ const { ethers } = require('ethers')
 const addresses = require('../deployedAddress')
 
 async function verifyContract() {
-  const contractAddress = addresses.seiMainnet.Weth
+  const contractAddress = addresses.zeechainTestnet.Weth
   const constructorArguments = []
 
   console.log('Verifying contract...')

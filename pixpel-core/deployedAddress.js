@@ -1,4 +1,4 @@
-const { seiMainnet } = require('../pixpel-periphery/deployedAddress')
+const { seiMainnet, zeechainTestnet } = require('../pixpel-periphery/deployedAddress')
 
 module.exports = {
   Amoy1Factory: '0x38d8959342B1c372cf45a7C529B8a2c370648e04',
@@ -9,5 +9,7 @@ module.exports = {
   AvaxFactory: '0x0E953D8fF8071A691cEff5f844C0c58332970c27',
   // SkaleNebulaFactory: '0xfA0C405d13907Aa8D6093A9BA25f62B6C3166798'
   SkaleNebulaFactory: '0x718699c0d898EaBeA72A52655824D68b84a746F4',
-  SeiMainnetFactory: '0xfA0C405d13907Aa8D6093A9BA25f62B6C3166798'
+  SeiMainnetFactory: '0xfA0C405d13907Aa8D6093A9BA25f62B6C3166798',
+  SeiTestnetFactory: '0x6c17f69ee9a08050b9C37a7D3331723995136C19',
+  zeechainTestnetFactory: '0x95ac999302Ff402b39A8B952a662863338585d3c'
 }
