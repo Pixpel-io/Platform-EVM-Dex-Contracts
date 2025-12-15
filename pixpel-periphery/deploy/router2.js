@@ -18,10 +18,10 @@ async function main() {
     wallet,
     PixpelSwapRouter02,
     [
-      address.seiMainnet.Factory,
-      address.seiMainnet.Weth,
-      address.seiMainnet.LaunchPadAddress,
-      address.seiMainnet.LPFundManager
+      address.zeechainTestnet.Factory,
+      address.zeechainTestnet.Weth,
+      address.zeechainTestnet.LaunchPadAddress,
+      address.zeechainTestnet.LPFundManager
     ],
     {
       gasLimit: 9000000,

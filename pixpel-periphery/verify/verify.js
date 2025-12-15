@@ -3,12 +3,12 @@ const { ethers } = require('ethers')
 const addresses = require('../deployedAddress')
 
 async function verifyContract() {
-  const contractAddress = addresses.seiMainnet.Router
+  const contractAddress = addresses.zeechainTestnet.Router
   const constructorArguments = [
-    addresses.seiMainnet.Factory,
-    addresses.seiMainnet.Weth,
-    addresses.seiMainnet.LaunchPadAddress,
-    addresses.seiMainnet.LPFundManager
+    addresses.zeechainTestnet.Factory,
+    addresses.zeechainTestnet.Weth,
+    addresses.zeechainTestnet.LaunchPadAddress,
+    addresses.zeechainTestnet.LPFundManager
   ]
 
   console.log('Verifying contract...')

@@ -8,7 +8,7 @@ const Erc20 = require('../build/ERC20.json')
 
 async function main() {
   // Connect to Polygon network
-  const provider = new ethers.providers.JsonRpcProvider(process.env.POLYGON_RPC_URL)
+  const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL)
 
   // Create wallet instance
   const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider)

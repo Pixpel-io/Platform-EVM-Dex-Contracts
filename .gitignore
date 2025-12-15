@@ -1,5 +1,4 @@
 # Environment files
-.env
 pixpel-core/.env
 pixpel-periphery/.env
 
@@ -20,3 +19,4 @@ pixpel-periphery/build/
 .DS_Store
 .idea/
 .vscode/
+config.bat

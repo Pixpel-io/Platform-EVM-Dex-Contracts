@@ -18,7 +18,7 @@ async function main() {
   // Deploy PixpelSwap contract using ethereum-waffle's deployContract function
   const weth = await deployContract(wallet, Weth, [], {
     gasLimit: 4700000,
-    gasPrice: ethers.utils.parseUnits('120', 'gwei') // Example gas price, adjust as needed
+    gasPrice: ethers.utils.parseUnits('30', 'gwei') // Example gas price, adjust as needed
   })
   console.log('Weth deployed at:', weth.address)
 }
